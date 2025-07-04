@@ -8,9 +8,9 @@ class PlayerSetup extends HTMLElement {
 
   async connectedCallback() {
     const [htmlText, cssText, baseText] = await Promise.all([
-      fetch('/components/player-setup/player-setup.html').then(res => res.text()),
-      fetch('/components/player-setup/player-setup.css').then(res => res.text()),
-      fetch('/style.css').then(res => res.text())
+      fetch('./components/player-setup/player-setup.html').then(res => res.text()),
+      fetch('./components/player-setup/player-setup.css').then(res => res.text()),
+      fetch('./style.css').then(res => res.text())
     ]);
 
     const template = document.createElement('template');

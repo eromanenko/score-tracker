@@ -8,9 +8,9 @@ class GameSelect extends HTMLElement {
 
   async connectedCallback() {
     const [htmlText, cssText, baseText] = await Promise.all([
-      fetch('/components/game-select/game-select.html').then(res => res.text()),
-      fetch('/components/game-select/game-select.css').then(res => res.text()),
-      fetch('/style.css').then(res => res.text())
+      fetch('./components/game-select/game-select.html').then(res => res.text()),
+      fetch('./components/game-select/game-select.css').then(res => res.text()),
+      fetch('./style.css').then(res => res.text())
     ]);
 
     const template = document.createElement('template');
