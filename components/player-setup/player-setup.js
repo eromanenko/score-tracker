@@ -28,7 +28,7 @@ class PlayerSetup extends HTMLElement {
     const input = this.shadowRoot.querySelector('input');
     const name = input.value.trim();
     if (name) {
-      const players = getValue('players') || '[]';
+      const players = getValue('players') || [];
       players.push({ name, score: 0 });
       saveValue('players', players);
       input.value = '';
@@ -37,7 +37,7 @@ class PlayerSetup extends HTMLElement {
   }
 
   renderList() {
-    const players = getValue('players') || '[]';
+    const players = getValue('players') || [];
     const ul = this.shadowRoot.querySelector('ul');
     if (ul) {
       ul.innerHTML = players.map(p => `<li>${p.name}</li>`).join('');
