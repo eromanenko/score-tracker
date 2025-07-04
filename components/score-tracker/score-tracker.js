@@ -1,3 +1,5 @@
+import { getValue } from "../../storage.service.js";
+
 class ScoreTracker extends HTMLElement {
   constructor() {
     super();
@@ -5,8 +7,8 @@ class ScoreTracker extends HTMLElement {
   }
 
   connectedCallback() {
-    this.players = JSON.parse(localStorage.getItem('players') || '[]');
-    this.game = localStorage.getItem('game');
+    this.players = getValue('players') || '[]';
+    this.game = getValue('game');
     this.render();
   }
 
@@ -15,7 +17,7 @@ class ScoreTracker extends HTMLElement {
     const value = parseInt(input.value);
     if (!isNaN(value)) {
       this.players[index].score += value;
-      localStorage.setItem('players', JSON.stringify(this.players));
+      setValue('players', this.players);
       this.checkEnd();
       this.render();
     }
@@ -32,7 +34,7 @@ class ScoreTracker extends HTMLElement {
     const target = this.getTargetScore();
     const winner = this.players.find(p => p.score >= target);
     if (winner) {
-      alert(`${winner.name} переміг!`);
+      alert(`${winner.name} won!`);
       location.hash = 'player-setup';
     }
   }
@@ -40,14 +42,14 @@ class ScoreTracker extends HTMLElement {
   render() {
     const list = this.players.map((p, i) => `
       <div>
-        <strong>${p.name}:</strong> ${p.score} балів
+        <strong>${p.name}:</strong> ${p.score} / ${this.getTargetScore()}
         <input type="number" id="input-${i}" />
-        <button onclick="this.getRootNode().host.addScore(${i})">Додати</button>
+        <button onclick="this.getRootNode().host.addScore(${i})">Add</button>
       </div>
     `).join('');
     this.shadowRoot.innerHTML = `
       <div>
-        <h2>Підрахунок балів</h2>
+        <h2>Score</h2>
         ${list}
       </div>
     `;

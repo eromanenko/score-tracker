@@ -1,6 +1,6 @@
-import './player-setup.js';
-import './game-select.js';
-import './score-tracker.js';
+import './player-setup/player-setup.js';
+import './game-select/game-select.js';
+import './score-tracker/score-tracker.js';
 
 class AppRoot extends HTMLElement {
   constructor() {
