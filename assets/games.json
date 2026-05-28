@@ -1,0 +1,38 @@
+{
+  "version": "1.1.0",
+  "games": [
+    {
+      "id": "7-wonders",
+      "nameEN": "7 Wonders",
+      "nameUK": "7 Чудес",
+      "nameRU": "7 Чудес",
+      "minPlayers": 3,
+      "maxPlayers": 7,
+      "scoringType": "category",
+      "iconUrl": "🏛️",
+      "bundleUrl": "./assets/games/7-wonders.zip"
+    },
+    {
+      "id": "take-6",
+      "nameEN": "Take 6!",
+      "nameUK": "Корова 006",
+      "nameRU": "Корова 006",
+      "minPlayers": 2,
+      "maxPlayers": 10,
+      "scoringType": "cumulative",
+      "iconUrl": "🐮",
+      "bundleUrl": "./assets/games/take-6.zip"
+    },
+    {
+      "id": "star-realms",
+      "nameEN": "Star Realms",
+      "nameUK": "Зоряні імперії",
+      "nameRU": "Звездные империи",
+      "minPlayers": 2,
+      "maxPlayers": 4,
+      "scoringType": "tracker",
+      "iconUrl": "🚀",
+      "bundleUrl": "./assets/games/star-realms.zip"
+    }
+  ]
+}

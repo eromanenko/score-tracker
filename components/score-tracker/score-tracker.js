@@ -1,59 +1,68 @@
-import { getValue } from "../../storage.service.js";
+import { getValue, saveValue, loadGameBundle } from '../../storage.service.js';
+import { t } from '../../ui.i18n.service.js';
 
-class ScoreTracker extends HTMLElement {
+// Dynamically import scorers so they register their custom elements
+import '../scorers/category-scorer.js';
+import '../scorers/cumulative-scorer.js';
+import '../scorers/tracker-scorer.js';
+
+class ScoreBoard extends HTMLElement {
   constructor() {
     super();
     this.attachShadow({ mode: 'open' });
   }
 
-  connectedCallback() {
-    this.players = getValue('players') || '[]';
-    this.game = getValue('game');
-    this.render();
-  }
-
-  addScore(index) {
-    const input = this.shadowRoot.querySelector(`#input-${index}`);
-    const value = parseInt(input.value);
-    if (!isNaN(value)) {
-      this.players[index].score += value;
-      setValue('players', this.players);
-      this.checkEnd();
-      this.render();
+  async connectedCallback() {
+    let game = getValue('selected_game');
+    if (!game) {
+      location.hash = '';
+      return;
     }
-  }
 
-  getTargetScore() {
-    const count = this.players.length;
-    if (this.game === 'flip7') return 200;
-    if (this.game === 'ssp') return count === 2 ? 40 : count === 3 ? 35 : 30;
-    return 999;
-  }
-
-  checkEnd() {
-    const target = this.getTargetScore();
-    const winner = this.players.find(p => p.score >= target);
-    if (winner) {
-      alert(`${winner.name} won!`);
-      location.hash = 'player-setup';
-    }
-  }
-
-  render() {
-    const list = this.players.map((p, i) => `
-      <div>
-        <strong>${p.name}:</strong> ${p.score} / ${this.getTargetScore()}
-        <input type="number" id="input-${i}" />
-        <button onclick="this.getRootNode().host.addScore(${i})">Add</button>
-      </div>
-    `).join('');
+    // Show loading state
     this.shadowRoot.innerHTML = `
-      <div>
-        <h2>Score</h2>
-        ${list}
-      </div>
+      <style>
+        :host { display: flex; justify-content: center; align-items: center; height: 100vh; color: white; }
+      </style>
+      <div><h2>${t('loading')}</h2></div>
+    `;
+
+    // Load bundle
+    const config = await loadGameBundle(game);
+    if (!config) {
+      this.shadowRoot.innerHTML = `<div>Error loading game bundle.</div>`;
+      return;
+    }
+    
+    game.config = config;
+    saveValue('selected_game', game);
+
+    let scorerTag = '';
+    switch (game.scoringType) {
+      case 'category':
+        scorerTag = '<category-scorer></category-scorer>';
+        break;
+      case 'cumulative':
+        scorerTag = '<cumulative-scorer></cumulative-scorer>';
+        break;
+      case 'tracker':
+        scorerTag = '<tracker-scorer></tracker-scorer>';
+        break;
+      default:
+        scorerTag = '<div>Unknown game type</div>';
+    }
+
+    this.shadowRoot.innerHTML = `
+      <style>
+        :host {
+          display: block;
+          width: 100%;
+          height: 100%;
+        }
+      </style>
+      ${scorerTag}
     `;
   }
 }
 
-customElements.define('score-tracker', ScoreTracker);
+customElements.define('score-board', ScoreBoard);

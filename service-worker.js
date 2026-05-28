@@ -1,33 +1,42 @@
-const CACHE_NAME = 'score-sheet-cache-v1';
+const CACHE_NAME = 'score-sheet-cache-v2';
 
 self.addEventListener("install", event => {
   event.waitUntil(
-    caches.open("score-tracker-cache").then(cache => {
+    caches.open(CACHE_NAME).then(cache => {
       return cache.addAll([
-        "/",
+        "./",
         "./icon.png",
         "./index.html",
         "./main.js",
         "./manifest.json",
-        "./storage.service.js",
         "./style.css",
+        "./storage.service.js",
+        "./ui.i18n.service.js",
+        "./modal.service.js",
+        "./assets/games.json",
         "./components/app-root.js",
-        "./components/player-setup/player-setup.js",
-        "./components/player-setup/player-setup.css",
-        "./components/player-setup/player-setup.html",
         "./components/game-select/game-select.js",
-        "./components/game-select/game-select.css",
-        "./components/game-select/game-select.html",
-        "./components/score-tracker/score-tracker.js"
+        "./components/player-setup/player-setup.js",
+        "./components/score-tracker/score-tracker.js",
+        "./components/scorers/category-scorer.js",
+        "./components/scorers/cumulative-scorer.js",
+        "./components/scorers/tracker-scorer.js"
       ]);
     })
   );
+  self.skipWaiting();
 });
 
 self.addEventListener("fetch", event => {
   event.respondWith(
     caches.match(event.request).then(response => {
-      return response || fetch(event.request);
+      // Return cached response, or fetch from network
+      return response || fetch(event.request).then(fetchRes => {
+        return caches.open(CACHE_NAME).then(cache => {
+          cache.put(event.request, fetchRes.clone());
+          return fetchRes;
+        });
+      });
     })
   );
 });
@@ -40,4 +49,5 @@ self.addEventListener('activate', event => {
       )
     )
   );
+  self.clients.claim();
 });
