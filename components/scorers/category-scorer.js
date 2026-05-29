@@ -1,6 +1,6 @@
 import { getValue, saveValue } from '../../storage.service.js';
 import { t, getLanguage } from '../../ui.i18n.service.js';
-import { showConfirm } from '../../modal.service.js';
+import { showConfirm, showToast } from '../../modal.service.js';
 
 class CategoryScorer extends HTMLElement {
   constructor() {
@@ -124,6 +124,17 @@ class CategoryScorer extends HTMLElement {
           vertical-align: middle;
         }
         
+        .cat-icon.large {
+          width: 2.5rem;
+          height: 2.5rem;
+          margin-right: 0;
+        }
+        
+        td:first-child.icon-only {
+          text-align: center;
+          padding: 0.25rem;
+        }
+        
         .cat-icon img {
           max-width: 100%;
           max-height: 100%;
@@ -147,16 +158,19 @@ class CategoryScorer extends HTMLElement {
           <table>
             <thead>
               <tr>
-                <th>${t('categories')}</th>
+                <th>${this.game.config.headerIconBlobUrl ? `<img src="${this.game.config.headerIconBlobUrl}" alt="${t('categories')}" style="height:1.5rem; vertical-align:middle;">` : t('categories')}</th>
                 ${this.players.map(p => `<th>${p.name}</th>`).join('')}
               </tr>
             </thead>
             <tbody>
-              ${this.categories.map(cat => `
-                <tr>
-                  <td>
-                    <span class="cat-icon">${cat.iconBlobUrl ? `<img src="${cat.iconBlobUrl}" alt="${cat.id}">` : (cat.icon || '')}</span>
-                    ${cat['name' + lang] || cat.nameEN || cat.id}
+              ${this.categories.map((cat, index) => {
+                const displayName = cat['name' + lang] || (cat.nameEN !== undefined ? cat.nameEN : cat.id);
+                const hasName = displayName.trim().length > 0;
+                return `
+                <tr style="${cat.color ? `background-color: ${cat.color};` : ''}">
+                  <td class="${hasName ? '' : 'icon-only'} category-header" data-cat="${index}" style="${cat.color ? `background-color: ${cat.color};` : ''} cursor: pointer;">
+                    <span class="cat-icon ${hasName ? '' : 'large'}">${cat.iconBlobUrl ? `<img src="${cat.iconBlobUrl}" alt="${cat.id}">` : (cat.icon || '')}</span>
+                    ${hasName ? displayName : ''}
                     ${cat.divider ? ` (/${cat.divider})` : ''}
                   </td>
                   ${this.players.map((p, i) => `
@@ -167,9 +181,9 @@ class CategoryScorer extends HTMLElement {
                     </td>
                   `).join('')}
                 </tr>
-              `).join('')}
+              `}).join('')}
               <tr class="total-row">
-                <td>${t('total')}</td>
+                <td style="text-align: center;">${this.game.config.totalIconBlobUrl ? `<img src="${this.game.config.totalIconBlobUrl}" alt="${t('total')}" style="height:2rem; vertical-align:middle;">` : t('total')}</td>
                 ${this.players.map((p, i) => `<td id="total-${i}">${p.score}</td>`).join('')}
               </tr>
             </tbody>
@@ -178,21 +192,46 @@ class CategoryScorer extends HTMLElement {
         
         <div class="controls">
           <button class="secondary" id="btn-back">${t('new_game')}</button>
+          <button class="primary" id="btn-restart">${t('play_again')}</button>
         </div>
       </div>
     `;
 
     // Attach listeners
-    this.categories.forEach(cat => {
+    this.categories.forEach((cat, idx) => {
       this.players.forEach((p, i) => {
         const input = this.shadowRoot.getElementById(`input-${i}-${cat.id}`);
         input.addEventListener('input', (e) => this.handleInput(i, cat.id, e.target.value));
       });
     });
 
+    this.shadowRoot.querySelectorAll('.category-header').forEach(header => {
+      header.addEventListener('click', () => {
+        const catIndex = header.getAttribute('data-cat');
+        const cat = this.categories[catIndex];
+        const lang = getLanguage().toUpperCase();
+        const hint = cat['hint' + lang] || cat.hintEN;
+        if (hint) {
+          showToast(hint);
+        }
+      });
+    });
+
     this.shadowRoot.getElementById('btn-back').onclick = async () => {
       const confirm = await showConfirm(t('new_game'), t('confirm_new_game', {}, 'Are you sure you want to end this game?'));
       if (confirm) location.hash = 'game-select';
+    };
+    
+    this.shadowRoot.getElementById('btn-restart').onclick = async () => {
+      const confirm = await showConfirm(t('play_again'), t('confirm_play_again', {}, 'Are you sure you want to reset the scores?'));
+      if (confirm) {
+        this.players.forEach(p => {
+          this.categories.forEach(c => p.categoryScores[c.id] = 0);
+          p.score = 0;
+        });
+        saveValue('players', this.players);
+        this.render();
+      }
     };
     
     // Initial calc

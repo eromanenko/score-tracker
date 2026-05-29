@@ -2,7 +2,7 @@ import './game-select/game-select.js';
 import './player-setup/player-setup.js';
 import './score-tracker/score-tracker.js';
 import { setLanguage, getLanguage, t } from '../ui.i18n.service.js';
-import { getFilterMode, setFilterMode } from '../storage.service.js';
+import { getFilterMode, setFilterMode, getValue } from '../storage.service.js';
 
 class AppRoot extends HTMLElement {
   constructor() {
@@ -190,6 +190,7 @@ class AppRoot extends HTMLElement {
 
           <div style="text-align: center; margin-top: 2rem;">
             <button class="primary" id="btn-close-settings">OK</button>
+            <div style="margin-top: 1rem; color: var(--text-secondary); font-size: 0.8rem; font-family: monospace;">v${getValue('games_version') || '1.1.1'}</div>
           </div>
         </div>
       </div>

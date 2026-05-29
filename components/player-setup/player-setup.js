@@ -97,80 +97,86 @@ class PlayerSetup extends HTMLElement {
     const baseStyle = document.querySelector('link[href="./style.css"]');
     const baseStyleHref = baseStyle ? baseStyle.href : '../../style.css';
 
-    this.shadowRoot.innerHTML = `
-      <style>
-        @import url('${baseStyleHref}');
+    if (!this.shadowRoot.querySelector('#content')) {
+      this.shadowRoot.innerHTML = `
+        <style>
+          @import url('${baseStyleHref}');
 
-        :host {
-          display: block;
-          opacity: 0;
-          animation: hostFadeIn 0.3s ease-out forwards;
-        }
+          :host {
+            display: block;
+            opacity: 0;
+            animation: hostFadeIn 0.3s ease-out forwards;
+          }
 
-        @keyframes hostFadeIn {
-          from { opacity: 0; }
-          to { opacity: 1; }
-        }
-        
-        header {
-          text-align: center;
-          margin-bottom: 2rem;
-        }
-        
-        .counter-controls {
-          display: flex;
-          align-items: center;
-          justify-content: center;
-          gap: 1.5rem;
-          margin-bottom: 2rem;
-        }
-        
-        .counter-value {
-          font-size: 2.5rem;
-          font-weight: 800;
-          min-width: 3rem;
-          text-align: center;
-        }
-        
-        .counter-btn {
-          width: 3rem;
-          height: 3rem;
-          border-radius: 50%;
-          font-size: 1.5rem;
-          padding: 0;
-        }
-        
-        .players-list {
-          display: flex;
-          flex-direction: column;
-          gap: 1rem;
-          margin-bottom: 2.5rem;
-        }
-        
-        .player-input-row {
-          display: flex;
-          align-items: center;
-          gap: 1rem;
-        }
-        
-        .player-number {
-          font-weight: 600;
-          color: var(--text-secondary);
-          width: 2rem;
-          text-align: right;
-        }
-        
-        .input-wrapper {
-          flex: 1;
-        }
-        
-        .actions {
-          display: flex;
-          justify-content: center;
-          gap: 1rem;
-        }
-      </style>
-      
+          @keyframes hostFadeIn {
+            from { opacity: 0; }
+            to { opacity: 1; }
+          }
+          
+          header {
+            text-align: center;
+            margin-bottom: 2rem;
+          }
+          
+          .counter-controls {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 1.5rem;
+            margin-bottom: 2rem;
+          }
+          
+          .counter-value {
+            font-size: 2.5rem;
+            font-weight: 800;
+            min-width: 3rem;
+            text-align: center;
+          }
+          
+          .counter-btn {
+            width: 3rem;
+            height: 3rem;
+            border-radius: 50%;
+            font-size: 1.5rem;
+            padding: 0;
+          }
+          
+          .players-list {
+            display: flex;
+            flex-direction: column;
+            gap: 1rem;
+            margin-bottom: 2.5rem;
+          }
+          
+          .player-input-row {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+          }
+          
+          .player-number {
+            font-weight: 600;
+            color: var(--text-secondary);
+            width: 2rem;
+            text-align: right;
+          }
+          
+          .input-wrapper {
+            flex: 1;
+          }
+          
+          .actions {
+            display: flex;
+            justify-content: center;
+            gap: 1rem;
+          }
+        </style>
+        <div id="content"></div>
+      `;
+    }
+
+    const content = this.shadowRoot.getElementById('content');
+    content.innerHTML = `
       <div class="container fade-in">
         <header>
           <h2>${this.game['name' + getLanguage().toUpperCase()] || this.game.nameEN || this.game.id}</h2>

@@ -1,4 +1,4 @@
-const CACHE_NAME = 'score-sheet-cache-v2';
+const CACHE_NAME = 'score-tracker-v1.1.2';
 
 self.addEventListener("install", event => {
   event.waitUntil(

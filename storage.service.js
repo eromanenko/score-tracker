@@ -41,7 +41,9 @@ export async function loadGames() {
         
         const localVersion = getValue('games_version');
         if (localVersion !== data.version) {
-            console.log(`Games updated to version ${data.version}`);
+            console.log(`Games updated to version ${data.version}. Clearing cache...`);
+            const db = await dbPromise;
+            await db.clear('store');
             saveValue('games_version', data.version);
         }
         
@@ -69,19 +71,59 @@ export async function loadGameBundle(game) {
 
     try {
         const zip = await JSZip.loadAsync(arrayBuffer);
-        const configStr = await zip.file("config.json").async("string");
-        const config = JSON.parse(configStr);
+        let config = { categories: [] };
+        
+        const configFile = zip.file("config.json");
+        if (configFile) {
+            const configStr = await configFile.async("string");
+            config = JSON.parse(configStr);
+        } else if (game.scoringType === 'category') {
+            const iconFiles = [];
+            zip.forEach((relativePath, zipEntry) => {
+                if (!zipEntry.dir && /\.(png|jpg|jpeg|svg|webp|gif)$/i.test(relativePath)) {
+                    // Only process files in the root folder (no slashes in path)
+                    if (!relativePath.includes('/')) {
+                        iconFiles.push(relativePath);
+                    }
+                }
+            });
+            
+            iconFiles.sort((a, b) => a.localeCompare(b, undefined, { numeric: true, sensitivity: 'base' }));
+            
+            config.categories = iconFiles.map((iconFile, index) => ({
+                id: `cat_${index}`,
+                nameEN: "",
+                iconFile: iconFile
+            }));
+        }
+
+        // Helper to load image to blob
+        const loadBlobUrl = async (fileName) => {
+            const file = zip.file(fileName);
+            if (!file) return null;
+            const uint8 = await file.async("uint8array");
+            let mimeType = "image/png";
+            const lowerName = fileName.toLowerCase();
+            if (lowerName.endsWith(".svg")) mimeType = "image/svg+xml";
+            else if (lowerName.endsWith(".jpg") || lowerName.endsWith(".jpeg")) mimeType = "image/jpeg";
+            else if (lowerName.endsWith(".webp")) mimeType = "image/webp";
+            else if (lowerName.endsWith(".gif")) mimeType = "image/gif";
+            const blob = new Blob([uint8], { type: mimeType });
+            return URL.createObjectURL(blob);
+        };
+
+        if (config.headerIconFile) {
+            config.headerIconBlobUrl = await loadBlobUrl(config.headerIconFile);
+        }
+        if (config.totalIconFile) {
+            config.totalIconBlobUrl = await loadBlobUrl(config.totalIconFile);
+        }
 
         // Process images if any
         if (config.categories) {
             for (let cat of config.categories) {
                 if (cat.iconFile) {
-                    const file = zip.file(cat.iconFile);
-                    if (file) {
-                        const blob = await file.async("blob");
-                        // Create ephemeral blob URL
-                        cat.iconBlobUrl = URL.createObjectURL(blob);
-                    }
+                    cat.iconBlobUrl = await loadBlobUrl(cat.iconFile);
                 }
             }
         }
@@ -107,7 +149,7 @@ export function savePlayerName(name) {
 
 // Settings
 export function getFilterMode() {
-    return getValue('games_filter_mode') || 'all'; // 'all' or 'selected'
+    return getValue('games_filter_mode') || 'selected'; // 'all' or 'selected'
 }
 
 export function setFilterMode(mode) {

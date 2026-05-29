@@ -1,5 +1,5 @@
 {
-  "version": "1.1.0",
+  "version": "1.1.2",
   "games": [
     {
       "id": "7-wonders",
@@ -11,6 +11,17 @@
       "scoringType": "category",
       "iconUrl": "🏛️",
       "bundleUrl": "./assets/games/7-wonders.zip"
+    },
+    {
+      "id": "strange-world",
+      "nameEN": "Strange World Above the Clouds",
+      "nameUK": "Дивовижний світ над хмарами",
+      "nameRU": "Удивительный мир над облаками",
+      "minPlayers": 2,
+      "maxPlayers": 4,
+      "scoringType": "category",
+      "iconUrl": "🌗",
+      "bundleUrl": "./assets/games/strange-world.zip"
     },
     {
       "id": "take-6",
@@ -33,6 +44,17 @@
       "scoringType": "tracker",
       "iconUrl": "🚀",
       "bundleUrl": "./assets/games/star-realms.zip"
+    },
+    {
+      "id": "castle-combo",
+      "nameEN": "Castle Combo",
+      "nameUK": "Castle Combo",
+      "nameRU": "Castle Combo",
+      "minPlayers": 2,
+      "maxPlayers": 5,
+      "scoringType": "category",
+      "iconUrl": "🏰",
+      "bundleUrl": "./assets/games/castle-combo.zip"
     }
   ]
 }

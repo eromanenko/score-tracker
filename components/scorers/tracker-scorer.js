@@ -86,6 +86,25 @@ class TrackerScorer extends HTMLElement {
       const confirm = await showConfirm(t('new_game'), t('confirm_new_game', {}, 'Are you sure you want to end this game?'));
       if (confirm) location.hash = 'game-select';
     };
+    
+    this.shadowRoot.getElementById('btn-restart').onclick = async () => {
+      const confirm = await showConfirm(t('play_again'), t('confirm_play_again', {}, 'Are you sure you want to reset the scores?'));
+      if (confirm) {
+        const startScore = this.game.config.startScore || 0;
+        this.players.forEach(p => {
+          p.score = startScore;
+          p.history = [];
+        });
+        saveValue('players', this.players);
+        this.players.forEach((p, i) => {
+          const scoreEl = this.shadowRoot.getElementById(`score-${i}`);
+          if (scoreEl) {
+            scoreEl.textContent = p.score;
+            this.bounce(scoreEl);
+          }
+        });
+      }
+    };
   }
 
   render() {
@@ -210,22 +229,29 @@ class TrackerScorer extends HTMLElement {
           100% { opacity: 0; transform: translate(-50%, -150%) scale(1.5); }
         }
         
-        .menu-btn {
+        .menu-container {
           position: absolute;
           top: 50%;
           left: 50%;
           transform: translate(-50%, -50%);
           z-index: 20;
+          display: flex;
+          gap: 1rem;
+        }
+        
+        .menu-btn {
           background: var(--surface-color);
           backdrop-filter: blur(10px);
           border-radius: 50%;
-          width: 3rem;
-          height: 3rem;
+          width: 3.5rem;
+          height: 3.5rem;
           display: flex;
           align-items: center;
           justify-content: center;
           border: 1px solid var(--surface-border);
           padding: 0;
+          font-size: 1.5rem;
+          cursor: pointer;
         }
       </style>
       
@@ -239,7 +265,10 @@ class TrackerScorer extends HTMLElement {
           </div>
         `).join('')}
         
-        <button class="menu-btn" id="btn-back">⚙️</button>
+        <div class="menu-container">
+          <button class="menu-btn" id="btn-back" title="${t('new_game')}">🏠</button>
+          <button class="menu-btn" id="btn-restart" title="${t('play_again')}">🔄</button>
+        </div>
       </div>
     `;
   }

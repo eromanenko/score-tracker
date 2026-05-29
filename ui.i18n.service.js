@@ -21,7 +21,9 @@ export const translations = {
     cancel: "Cancel",
     confirm_new_game: "Are you sure you want to end this game? Unsaved progress will be lost.",
     filter_all: "All Games",
-    filter_selected: "Selected Games"
+    filter_selected: "Selected Games",
+    play_again: "Play Again",
+    confirm_play_again: "Are you sure you want to reset the scores?"
   },
   uk: {
     select_game: "Оберіть гру",
@@ -45,7 +47,9 @@ export const translations = {
     cancel: "Скасувати",
     confirm_new_game: "Ви впевнені, що хочете завершити гру? Незбережений прогрес буде втрачено.",
     filter_all: "Усі ігри",
-    filter_selected: "Обрані ігри"
+    filter_selected: "Обрані ігри",
+    play_again: "Повторити",
+    confirm_play_again: "Ви впевнені, що хочете обнулити таблицю?"
   },
   ru: {
     select_game: "Выберите игру",
@@ -69,7 +73,9 @@ export const translations = {
     cancel: "Отмена",
     confirm_new_game: "Вы уверены, что хотите завершить игру? Несохраненный прогресс будет утерян.",
     filter_all: "Все игры",
-    filter_selected: "Выбранные"
+    filter_selected: "Выбранные",
+    play_again: "Повторить",
+    confirm_play_again: "Вы уверены, что хотите обнулить таблицу?"
   }
 };
 

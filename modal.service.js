@@ -43,8 +43,37 @@ function injectModalStyles() {
       border: 1px solid rgba(255,255,255,0.2);
       box-shadow: 0 25px 50px -12px rgba(0,0,0,0.5);
     }
+    .toast-message {
+      position: fixed;
+      top: 2rem;
+      left: 50%;
+      transform: translateX(-50%);
+      background: var(--surface-color, #1e293b);
+      color: white;
+      padding: 1rem 2rem;
+      border-radius: 2rem;
+      box-shadow: 0 10px 25px -5px rgba(0,0,0,0.5);
+      border: 1px solid rgba(255,255,255,0.1);
+      z-index: 10000;
+      font-size: 1.1rem;
+      pointer-events: none;
+      transition: opacity 0.3s;
+    }
   `;
   document.head.appendChild(style);
+}
+
+export function showToast(message, duration = 5000) {
+  injectModalStyles();
+  const toast = document.createElement('div');
+  toast.className = 'toast-message fade-in';
+  toast.textContent = message;
+  document.body.appendChild(toast);
+
+  setTimeout(() => {
+    toast.style.opacity = '0';
+    setTimeout(() => toast.remove(), 300);
+  }, duration);
 }
 
 export function showAlert(title, message) {
