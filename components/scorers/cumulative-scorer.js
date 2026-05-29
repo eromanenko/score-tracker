@@ -59,7 +59,8 @@ class CumulativeScorer extends HTMLElement {
   }
 
   render() {
-    const baseStyleHref = '../../style.css';
+    const baseStyle = document.querySelector('link[href="./style.css"]');
+    const baseStyleHref = baseStyle ? baseStyle.href : '../../style.css';
 
     this.shadowRoot.innerHTML = `
       <style>

@@ -108,7 +108,8 @@ class TrackerScorer extends HTMLElement {
   }
 
   render() {
-    const baseStyleHref = '../../style.css';
+    const baseStyle = document.querySelector('link[href="./style.css"]');
+    const baseStyleHref = baseStyle ? baseStyle.href : '../../style.css';
     const numPlayers = this.players.length;
     
     // Calculate grid template based on player count

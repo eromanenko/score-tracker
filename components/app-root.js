@@ -58,7 +58,8 @@ class AppRoot extends HTMLElement {
   }
 
   render() {
-    const baseStyleHref = './style.css';
+    const baseStyle = document.querySelector('link[href="./style.css"]');
+    const baseStyleHref = baseStyle ? baseStyle.href : './style.css';
     const lang = getLanguage();
 
     this.shadowRoot.innerHTML = `
