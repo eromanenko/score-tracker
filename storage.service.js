@@ -148,6 +148,14 @@ export function savePlayerName(name) {
 }
 
 // Settings
+export function getTheme() {
+    return getValue('theme') || 'dark'; // 'dark' or 'light'
+}
+
+export function setTheme(theme) {
+    saveValue('theme', theme);
+}
+
 export function getFilterMode() {
     return getValue('games_filter_mode') || 'selected'; // 'all' or 'selected'
 }

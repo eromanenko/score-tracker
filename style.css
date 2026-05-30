@@ -10,15 +10,43 @@
   --danger-color: #ef4444; /* Red 500 */
   --text-primary: #f8fafc; /* Slate 50 */
   --text-secondary: #94a3b8; /* Slate 400 */
-  --font-main: 'Outfit', system-ui, -apple-system, sans-serif;
   
+  --bg-gradient-1: rgba(59, 130, 246, 0.15);
+  --bg-gradient-2: rgba(16, 185, 129, 0.1);
+  --input-bg: rgba(15, 23, 42, 0.6);
+  --btn-secondary-bg: rgba(255, 255, 255, 0.1);
+  --btn-secondary-hover: rgba(255, 255, 255, 0.15);
+  --item-hover-bg: rgba(255, 255, 255, 0.1);
+  --shadow-glass: 0 8px 32px 0 rgba(0, 0, 0, 0.37);
+  --panel-gradient-end: rgba(15, 23, 42, 0.9);
+
+  --font-main: 'Outfit', system-ui, -apple-system, sans-serif;
   --radius-sm: 8px;
   --radius-md: 16px;
   --radius-lg: 24px;
   --radius-full: 9999px;
-  
-  --shadow-glass: 0 8px 32px 0 rgba(0, 0, 0, 0.37);
   --transition-smooth: all 0.3s cubic-bezier(0.25, 0.8, 0.25, 1);
+}
+
+[data-theme="light"] {
+  --bg-color: #f8fafc; /* Slate 50 */
+  --surface-color: rgba(255, 255, 255, 0.7);
+  --surface-border: rgba(0, 0, 0, 0.1);
+  --primary-color: #2563eb; /* Blue 600 */
+  --primary-glow: rgba(37, 99, 235, 0.3);
+  --accent-color: #059669; /* Emerald 600 */
+  --danger-color: #dc2626; /* Red 600 */
+  --text-primary: #0f172a; /* Slate 900 */
+  --text-secondary: #475569; /* Slate 600 */
+  
+  --bg-gradient-1: rgba(37, 99, 235, 0.15);
+  --bg-gradient-2: rgba(5, 150, 105, 0.15);
+  --input-bg: rgba(255, 255, 255, 0.6);
+  --btn-secondary-bg: rgba(0, 0, 0, 0.05);
+  --btn-secondary-hover: rgba(0, 0, 0, 0.1);
+  --item-hover-bg: rgba(0, 0, 0, 0.05);
+  --shadow-glass: 0 8px 32px 0 rgba(0, 0, 0, 0.1);
+  --panel-gradient-end: rgba(226, 232, 240, 0.9);
 }
 
 * {
@@ -32,8 +60,8 @@ body {
   font-family: var(--font-main);
   background-color: var(--bg-color);
   background-image: 
-    radial-gradient(at 0% 0%, rgba(59, 130, 246, 0.15) 0px, transparent 50%),
-    radial-gradient(at 100% 100%, rgba(16, 185, 129, 0.1) 0px, transparent 50%);
+    radial-gradient(at 0% 0%, var(--bg-gradient-1) 0px, transparent 50%),
+    radial-gradient(at 100% 100%, var(--bg-gradient-2) 0px, transparent 50%);
   color: var(--text-primary);
   min-height: 100vh;
   display: flex;
@@ -58,7 +86,7 @@ h1, h2, h3 {
 
 /* Form Elements */
 input[type="text"], input[type="number"] {
-  background: rgba(15, 23, 42, 0.6);
+  background: var(--input-bg);
   border: 1px solid var(--surface-border);
   color: var(--text-primary);
   font-family: var(--font-main);
@@ -103,13 +131,13 @@ button.primary:hover, button.primary:active {
 }
 
 button.secondary {
-  background: rgba(255, 255, 255, 0.1);
+  background: var(--btn-secondary-bg);
   color: var(--text-primary);
   border: 1px solid var(--surface-border);
 }
 
 button.secondary:hover, button.secondary:active {
-  background: rgba(255, 255, 255, 0.15);
+  background: var(--btn-secondary-hover);
 }
 
 /* Specific Layout Utilities */
@@ -154,5 +182,5 @@ button.secondary:hover, button.secondary:active {
   transition: background 0.2s;
 }
 .typeahead-item:hover {
-  background: rgba(255, 255, 255, 0.1);
+  background: var(--item-hover-bg);
 }

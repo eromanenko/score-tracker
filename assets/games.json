@@ -1,5 +1,5 @@
 {
-  "version": "1.1.3",
+  "version": "1.1.9",
   "games": [
     {
       "id": "7-wonders",
@@ -40,7 +40,7 @@
       "nameUK": "Зоряні імперії",
       "nameRU": "Звездные империи",
       "minPlayers": 2,
-      "maxPlayers": 4,
+      "maxPlayers": 6,
       "scoringType": "tracker",
       "iconUrl": "🚀",
       "bundleUrl": "./assets/games/star-realms.zip"
@@ -55,6 +55,28 @@
       "scoringType": "category",
       "iconUrl": "🏰",
       "bundleUrl": "./assets/games/castle-combo.zip"
+    },
+    {
+      "id": "flip-7",
+      "nameEN": "Flip 7",
+      "nameUK": "Flip 7",
+      "nameRU": "Flip 7",
+      "minPlayers": 2,
+      "maxPlayers": 18,
+      "scoringType": "cumulative",
+      "iconUrl": "🃏",
+      "bundleUrl": "./assets/games/flip-7.zip"
+    },
+    {
+      "id": "dnup",
+      "nameEN": "Dnup",
+      "nameUK": "Dnup",
+      "nameRU": "Dnup",
+      "minPlayers": 2,
+      "maxPlayers": 5,
+      "scoringType": "tracker",
+      "iconUrl": "🗘",
+      "bundleUrl": "./assets/games/dnup.zip"
     }
   ]
 }

@@ -2,7 +2,7 @@ import './game-select/game-select.js';
 import './player-setup/player-setup.js';
 import './score-tracker/score-tracker.js';
 import { setLanguage, getLanguage, t } from '../ui.i18n.service.js';
-import { getFilterMode, setFilterMode, getValue } from '../storage.service.js';
+import { getFilterMode, setFilterMode, getValue, getTheme, setTheme } from '../storage.service.js';
 
 class AppRoot extends HTMLElement {
   constructor() {
@@ -12,6 +12,7 @@ class AppRoot extends HTMLElement {
 
   connectedCallback() {
     this.isSettingsOpen = false;
+    this.applyTheme(getTheme());
     this.render();
 
     // Default route
@@ -57,10 +58,19 @@ class AppRoot extends HTMLElement {
     }
   }
 
+  applyTheme(theme) {
+    if (theme === 'light') {
+      document.documentElement.setAttribute('data-theme', 'light');
+    } else {
+      document.documentElement.removeAttribute('data-theme');
+    }
+  }
+
   render() {
     const baseStyle = document.querySelector('link[href="./style.css"]');
     const baseStyleHref = baseStyle ? baseStyle.href : './style.css';
     const lang = getLanguage();
+    const currentTheme = getTheme();
 
     this.shadowRoot.innerHTML = `
       <style>
@@ -182,6 +192,14 @@ class AppRoot extends HTMLElement {
           </div>
 
           <div class="settings-col">
+            <label style="color: var(--text-secondary); font-size: 0.9rem; text-transform: uppercase; letter-spacing: 1px;">Theme</label>
+            <div class="button-group" id="theme-group">
+              <button data-val="dark" class="${currentTheme === 'dark' ? 'active' : ''}">${t('dark', {}, 'Dark')}</button>
+              <button data-val="light" class="${currentTheme === 'light' ? 'active' : ''}">${t('light', {}, 'Light')}</button>
+            </div>
+          </div>
+
+          <div class="settings-col">
             <label style="color: var(--text-secondary); font-size: 0.9rem; text-transform: uppercase; letter-spacing: 1px;">Games Filter</label>
             <div class="button-group" id="filter-group">
               <button data-val="all" class="${getFilterMode() === 'all' ? 'active' : ''}">${t('filter_all', {}, 'All Games')}</button>
@@ -206,6 +224,17 @@ class AppRoot extends HTMLElement {
       btn.onclick = (e) => {
         setLanguage(e.target.getAttribute('data-val'));
         this.toggleSettings();
+      };
+    });
+
+    this.shadowRoot.querySelectorAll('#theme-group button').forEach(btn => {
+      btn.onclick = (e) => {
+        const theme = e.target.getAttribute('data-val');
+        setTheme(theme);
+        this.applyTheme(theme);
+        this.render(); // Re-render to update active buttons
+        const page = location.hash.slice(1) || 'game-select';
+        this.routeTo(page);
       };
     });
 

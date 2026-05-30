@@ -37,11 +37,32 @@ with zipfile.ZipFile('assets/games/take-6.zip', 'w') as z:
 # Star Realms
 config_sr = {
   "startScore": 50,
-  "winCondition": "highest",
-  "buttons": [-5, -1, 1, 5]
+  "winCondition": "last_standing",
+  "minScore": 0,
+  "buttons": [-10, -5, 5, 10]
 }
 
 with zipfile.ZipFile('assets/games/star-realms.zip', 'w') as z:
     z.writestr('config.json', json.dumps(config_sr, ensure_ascii=False, indent=2))
+
+# Flip 7
+config_flip7 = {
+  "winCondition": "highest",
+  "targetScore": 200
+}
+
+with zipfile.ZipFile('assets/games/flip-7.zip', 'w') as z:
+    z.writestr('config.json', json.dumps(config_flip7, ensure_ascii=False, indent=2))
+
+# Dnup
+config_dnup = {
+  "startScore": 0,
+  "minScore": 0,
+  "maxScore": 4,
+  "winCondition": "first_to_max"
+}
+
+with zipfile.ZipFile('assets/games/dnup.zip', 'w') as z:
+    z.writestr('config.json', json.dumps(config_dnup, ensure_ascii=False, indent=2))
 
 print("Zip files created successfully.")
