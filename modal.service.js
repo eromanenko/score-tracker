@@ -49,7 +49,7 @@ function injectModalStyles() {
       left: 50%;
       transform: translateX(-50%);
       background: var(--surface-color, #1e293b);
-      color: white;
+      color: var(--text-primary, white);
       padding: 1rem 2rem;
       border-radius: 2rem;
       box-shadow: 0 10px 25px -5px rgba(0,0,0,0.5);

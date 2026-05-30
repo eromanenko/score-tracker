@@ -1,5 +1,5 @@
 {
-  "version": "1.1.9",
+  "version": "1.1.10",
   "games": [
     {
       "id": "7-wonders",
@@ -64,7 +64,7 @@
       "minPlayers": 2,
       "maxPlayers": 18,
       "scoringType": "cumulative",
-      "iconUrl": "🃏",
+      "iconUrl": "7⃣️",
       "bundleUrl": "./assets/games/flip-7.zip"
     },
     {
@@ -75,7 +75,7 @@
       "minPlayers": 2,
       "maxPlayers": 5,
       "scoringType": "tracker",
-      "iconUrl": "🗘",
+      "iconUrl": "↕️",
       "bundleUrl": "./assets/games/dnup.zip"
     }
   ]
