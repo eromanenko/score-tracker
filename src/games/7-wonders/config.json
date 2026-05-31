@@ -1,0 +1,84 @@
+{
+  "headerIconFile": "header.svg",
+  "totalIconFile": "total.svg",
+  "categories": [
+    {
+      "id": "military",
+      "nameEN": "",
+      "nameUK": "",
+      "nameRU": "",
+      "iconFile": "",
+      "color": "rgba(200, 50, 50, 0.3)",
+      "hintEN": "Military. Gain points based on shields compared to your neighbors",
+      "hintUK": "Військо. Отримуйте очки за щити в порівнянні з вашими сусідами",
+      "hintRU": "Военные. Получайте очки за щиты по сравнению с вашими соседями"
+    },
+    {
+      "id": "coins",
+      "nameEN": "",
+      "nameUK": "",
+      "nameRU": "",
+      "iconFile": "coins.svg",
+      "divider": 3,
+      "color": "rgba(210, 180, 140, 0.3)",
+      "hintEN": "Coins. 1 victory point for every 3 coins you have at the end",
+      "hintUK": "Монети. 1 переможне очко за кожні 3 монети наприкінці гри",
+      "hintRU": "Монеты. 1 победное очко за каждые 3 монеты в конце игры"
+    },
+    {
+      "id": "wonders",
+      "nameEN": "",
+      "nameUK": "",
+      "nameRU": "",
+      "iconFile": "wonders.svg",
+      "color": "rgba(200, 200, 200, 0.3)",
+      "hintEN": "Wonders. Victory points from your constructed wonder stages",
+      "hintUK": "Чудеса. Переможні очки за побудовані етапи вашого дива світу",
+      "hintRU": "Чудеса. Победные очки за построенные этапы вашего чуда света"
+    },
+    {
+      "id": "civic",
+      "nameEN": "",
+      "nameUK": "",
+      "nameRU": "",
+      "iconFile": "",
+      "color": "rgba(100, 150, 250, 0.3)",
+      "hintEN": "Civic. Sum of victory points on all your blue civic cards",
+      "hintUK": "Громадські. Сума переможних очок на всіх ваших синіх картах",
+      "hintRU": "Гражданские. Сумма победных очков на всех ваших синих картах"
+    },
+    {
+      "id": "science",
+      "nameEN": "",
+      "nameUK": "",
+      "nameRU": "",
+      "iconFile": "",
+      "color": "rgba(100, 200, 100, 0.3)",
+      "hintEN": "Science. Points for sets of identical (2:4, 3:9, 4:16, 5:25, 6:36) and different (1 set = 7 points) science symbols",
+      "hintUK": "Наука. Очки за набори однакових (2:4, 3:9, 4:16, 5:25, 6:36) і різних (1 набір = 7 очок) символів науки",
+      "hintRU": "Наука. Очки за наборы одинаковых (2:4, 3:9, 4:16, 5:25, 6:36) и разных (1 набор = 7 очков) символов науки"
+    },
+    {
+      "id": "commercial",
+      "nameEN": "",
+      "nameUK": "",
+      "nameRU": "",
+      "iconFile": "",
+      "color": "rgba(250, 250, 100, 0.3)",
+      "hintEN": "Commercial. Points from your yellow commercial cards",
+      "hintUK": "Комерційні. Очки за ваші жовті комерційні карти",
+      "hintRU": "Торговля. Очки за ваши желтые коммерческие карты"
+    },
+    {
+      "id": "guilds",
+      "nameEN": "",
+      "nameUK": "",
+      "nameRU": "",
+      "iconFile": "",
+      "color": "rgba(150, 100, 200, 0.3)",
+      "hintEN": "Guilds. Points from your purple guild cards based on their specific conditions",
+      "hintUK": "Гільдії. Очки за фіолетові карти гільдій згідно з їхніми умовами",
+      "hintRU": "Гильдии. Очки за фиолетовые карты гильдий согласно их условиям"
+    }
+  ]
+}

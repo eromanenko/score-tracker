@@ -1,0 +1,11 @@
+{
+  "startScore": 50,
+  "winCondition": "last_standing",
+  "minScore": 0,
+  "buttons": [
+    -10,
+    -5,
+    5,
+    10
+  ]
+}

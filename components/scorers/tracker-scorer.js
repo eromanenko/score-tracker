@@ -180,9 +180,12 @@ class TrackerScorer extends HTMLElement {
     } else if (numPlayers === 5 || numPlayers === 6) {
       gridCols = '1fr 1fr';
       gridRows = '1fr 1fr 1fr';
-    } else if (numPlayers > 6) {
-      gridCols = '1fr 1fr';
-      gridRows = `repeat(${Math.ceil(numPlayers / 2)}, 1fr)`;
+    } else if (numPlayers >= 7 && numPlayers <= 9) {
+      gridCols = '1fr 1fr 1fr';
+      gridRows = '1fr 1fr 1fr';
+    } else if (numPlayers >= 10) {
+      gridCols = '1fr 1fr 1fr';
+      gridRows = '1fr 1fr 1fr 1fr';
     }
     
     this.shadowRoot.innerHTML = `
@@ -332,16 +335,30 @@ class TrackerScorer extends HTMLElement {
         
         /* Responsive scaling for 5+ players (3+ rows) */
         .tracker-container.players-5 .score-display,
-        .tracker-container.players-6 .score-display,
-        .tracker-container.players-7 .score-display,
-        .tracker-container.players-8 .score-display {
+        .tracker-container.players-6 .score-display {
           font-size: 5rem;
+        }
+
+        .tracker-container.players-7 .score-display,
+        .tracker-container.players-8 .score-display,
+        .tracker-container.players-9 .score-display {
+          font-size: 4rem;
+        }
+
+        .tracker-container.players-10 .score-display,
+        .tracker-container.players-11 .score-display,
+        .tracker-container.players-12 .score-display {
+          font-size: 3.5rem;
         }
         
         .tracker-container.players-5 .quick-btn,
         .tracker-container.players-6 .quick-btn,
         .tracker-container.players-7 .quick-btn,
-        .tracker-container.players-8 .quick-btn {
+        .tracker-container.players-8 .quick-btn,
+        .tracker-container.players-9 .quick-btn,
+        .tracker-container.players-10 .quick-btn,
+        .tracker-container.players-11 .quick-btn,
+        .tracker-container.players-12 .quick-btn {
           width: 2.8rem;
           height: 2.8rem;
           font-size: 1rem;
@@ -350,7 +367,11 @@ class TrackerScorer extends HTMLElement {
         .tracker-container.players-5 .quick-buttons,
         .tracker-container.players-6 .quick-buttons,
         .tracker-container.players-7 .quick-buttons,
-        .tracker-container.players-8 .quick-buttons {
+        .tracker-container.players-8 .quick-buttons,
+        .tracker-container.players-9 .quick-buttons,
+        .tracker-container.players-10 .quick-buttons,
+        .tracker-container.players-11 .quick-buttons,
+        .tracker-container.players-12 .quick-buttons {
           margin: 0.25rem 0;
           gap: 0.5rem;
         }
@@ -358,7 +379,11 @@ class TrackerScorer extends HTMLElement {
         .tracker-container.players-5 .side-info,
         .tracker-container.players-6 .side-info,
         .tracker-container.players-7 .side-info,
-        .tracker-container.players-8 .side-info {
+        .tracker-container.players-8 .side-info,
+        .tracker-container.players-9 .side-info,
+        .tracker-container.players-10 .side-info,
+        .tracker-container.players-11 .side-info,
+        .tracker-container.players-12 .side-info {
           left: 0.5rem;
           padding: 1rem 0;
         }
@@ -367,18 +392,30 @@ class TrackerScorer extends HTMLElement {
         .tracker-container.players-6 .side-plus,
         .tracker-container.players-7 .side-plus,
         .tracker-container.players-8 .side-plus,
+        .tracker-container.players-9 .side-plus,
+        .tracker-container.players-10 .side-plus,
+        .tracker-container.players-11 .side-plus,
+        .tracker-container.players-12 .side-plus,
         .tracker-container.players-5 .side-minus,
         .tracker-container.players-6 .side-minus,
         .tracker-container.players-7 .side-minus,
-        .tracker-container.players-8 .side-minus {
-          font-size: 2rem;
+        .tracker-container.players-8 .side-minus,
+        .tracker-container.players-9 .side-minus,
+        .tracker-container.players-10 .side-minus,
+        .tracker-container.players-11 .side-minus,
+        .tracker-container.players-12 .side-minus {
+          font-size: 1.5rem;
         }
         
         .tracker-container.players-5 .player-name,
         .tracker-container.players-6 .player-name,
         .tracker-container.players-7 .player-name,
-        .tracker-container.players-8 .player-name {
-          font-size: 1rem;
+        .tracker-container.players-8 .player-name,
+        .tracker-container.players-9 .player-name,
+        .tracker-container.players-10 .player-name,
+        .tracker-container.players-11 .player-name,
+        .tracker-container.players-12 .player-name {
+          font-size: 0.9rem;
         }
         
         .floater {
@@ -426,8 +463,13 @@ class TrackerScorer extends HTMLElement {
       </style>
       
       <div class="tracker-container players-${numPlayers}">
-        ${this.players.map((p, i) => `
-          <div class="player-panel" id="panel-${i}">
+        ${this.players.map((p, i) => {
+          let panelStyle = '';
+          if (this.game.config.colors && this.game.config.colors[i]) {
+            panelStyle = `background: linear-gradient(135deg, ${this.game.config.colors[i]}, var(--panel-gradient-end));`;
+          }
+          return `
+          <div class="player-panel" id="panel-${i}" style="${panelStyle}">
             <div class="tap-zone top" data-player="${i}" data-val="1"></div>
             
             <div class="side-info">
@@ -449,7 +491,7 @@ class TrackerScorer extends HTMLElement {
             ` : ''}
             <div class="tap-zone bottom" data-player="${i}" data-val="-1"></div>
           </div>
-        `).join('')}
+        `}).join('')}
         
         <div class="menu-container">
           <button class="menu-btn" id="btn-back" title="${t('new_game')}">🏠</button>

@@ -1,0 +1,55 @@
+{
+  "headerIconFile": "persons.svg",
+  "totalIconFile": "total.png",
+  "categories": [
+    {
+      "id": "colonies",
+      "iconFile": "c1.png",
+      "color": "rgba(200, 50, 50, 0.3)",
+      "hintEN": "Get the VP indicated in the bottom right corner of each of your Colonies",
+      "hintUK": "Отримайте ПО, вказані в правому нижньому куті кожної вашої Колонії",
+      "hintRU": "Получите ПО, указанные в правом нижнем углу каждой вашей Колонии"
+    },
+    {
+      "id": "statues",
+      "iconFile": "c2.png",
+      "color": "rgba(50, 100, 220, 0.3)",
+      "hintEN": "Get the VP indicated above the carved statues, as well as bonus VP (indicated on the left), if you have 1 VP at the statue's location",
+      "hintUK": "Отримайте ПО, вказані над витесаними Статуями, а також бонусні ПО (вказані зліва), якщо у вас на місці Статуї - 1 ПО",
+      "hintRU": "Получите ПО, указанные над высеченными Статуями, а также бонусные ПО (указаны слева), если у вас на месте Статуи - 1 ПО"
+    },
+    {
+      "id": "silver",
+      "iconFile": "c3.png",
+      "color": "rgba(180, 180, 180, 0.3)",
+      "hintEN": "Depending on the color of the bonus tile, get VP in the amount of half the value on the track of the same color (round up)",
+      "hintUK": "В залежності від кольору бонусного тайла, отримайте ПО в кількості половини значення на треку того ж кольору (округлювати в більшу сторону)",
+      "hintRU": "В зависимости от цвета бонусного тайла, получите ПО в количестве половины значения на треке того же цвета (округлять в большую сторону)"
+    },
+    {
+      "id": "gold",
+      "iconFile": "c4.png",
+      "color": "rgba(255, 165, 0, 0.3)",
+      "hintEN": "If you have 1 medal - 7 VP for each set of cards of 5 colors. If you have both medals - 14 VP for each set",
+      "hintUK": "Якщо у вас 1 медаль - за кожен набір з карт 5 кольорів - 7 ПО. Якщо у вас є обидві медалі - 14 ПО за кожен набір",
+      "hintRU": "Если у вас 1 медаль - 7 ПО за каждый набор из карт 5 цветов. Если у вас есть обе медали - 14 ПО за каждый набор"
+    },
+    {
+      "id": "cards",
+      "iconFile": "c5.png",
+      "color": "rgba(139, 69, 19, 0.3)",
+      "hintEN": "Get points indicated on each of your cards",
+      "hintUK": "Отримайте ПО, які вказані на кожній вашій карті",
+      "hintRU": "Получите ПО, которые указаны на каждой вашей карте"
+    },
+    {
+      "id": "coins",
+      "iconFile": "c6.png",
+      "color": "rgba(255, 215, 0, 0.3)",
+      "hintEN": "Amount of coins. For every 5 coins left, get 1 VP",
+      "hintUK": "Кількість монет. За кожні 5 монет, що у вас залишились, отримайте 1 ПО",
+      "hintRU": "Количество монет. За каждые 5 оставшихся монет получите 1 ПО",
+      "divider": 5
+    }
+  ]
+}

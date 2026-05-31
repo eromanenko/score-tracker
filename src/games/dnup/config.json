@@ -1,0 +1,6 @@
+{
+  "startScore": 0,
+  "minScore": 0,
+  "maxScore": 4,
+  "winCondition": "first_to_max"
+}

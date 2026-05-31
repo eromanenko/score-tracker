@@ -49,6 +49,8 @@ function injectModalStyles() {
       left: 50%;
       transform: translateX(-50%);
       background: var(--surface-color, #1e293b);
+      backdrop-filter: blur(12px);
+      -webkit-backdrop-filter: blur(12px);
       color: var(--text-primary, white);
       padding: 1rem 2rem;
       border-radius: 2rem;

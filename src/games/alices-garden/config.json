@@ -1,0 +1,58 @@
+{
+  "headerIconFile": "person.svg",
+  "totalIconFile": "total.svg",
+  "categories": [
+    {
+      "id": "chess",
+      "hintEN": "Count of Chess pieces on chess board spaces (5 pts each)",
+      "hintUK": "Кількість шахових фігур на клітинках шахівниці (5 очок за кожну)",
+      "hintRU": "Количество шахматных фигур на клетках доски (5 очков за каждую)",
+      "iconFile": "chess.svg",
+      "color": "rgba(34,197,94,0.1)",
+      "multiplier": 5
+    },
+    {
+      "id": "roses",
+      "hintEN": "Points for Rose areas (1/4/9/16/25 pts for size 1/2/3/4/5+)",
+      "hintUK": "Очки за Троянди (1/4/9/16/25 очок за ділянку розміром 1/2/3/4/5+)",
+      "hintRU": "Очки за Розы (1/4/9/16/25 очков за участок размером 1/2/3/4/5+)",
+      "iconFile": "rose.svg",
+      "color": "rgba(34,197,94,0.1)"
+    },
+    {
+      "id": "mushrooms",
+      "hintEN": "Count of columns with 2+ Mushrooms (8 pts each)",
+      "hintUK": "Кількість колонок з 2+ Грибами (8 очок за кожну)",
+      "hintRU": "Количество колонок с 2+ Грибами (8 очков за каждую)",
+      "iconFile": "mushroom.svg",
+      "color": "rgba(34,197,94,0.1)",
+      "multiplier": 8
+    },
+    {
+      "id": "trees",
+      "hintEN": "Points for distance between Trees in each row",
+      "hintUK": "Очки за відстань між Деревами в кожному ряду",
+      "hintRU": "Очки за расстояние между Деревьями в каждом ряду",
+      "iconFile": "tree.svg",
+      "color": "rgba(34,197,94,0.1)"
+    },
+    {
+      "id": "empty",
+      "hintEN": "Count of empty isolated areas (-5 pts each)",
+      "hintUK": "Кількість порожніх відокремлених ділянок (-5 очок за кожну)",
+      "hintRU": "Количество пустых изолированных участков (-5 очков за каждый)",
+      "iconFile": "empty.svg",
+      "color": "rgba(239,68,68,0.1)",
+      "multiplier": -5
+    },
+    {
+      "id": "bonus",
+      "hintEN": "Count of unused bonus tiles (-5 pts each)",
+      "hintUK": "Кількість невикористаних бонусних тайлів (-5 очок за кожен)",
+      "hintRU": "Количество неиспользованных бонусных тайлов (-5 очков за каждый)",
+      "iconFile": "bonus.svg",
+      "color": "rgba(239,68,68,0.1)",
+      "multiplier": -5
+    }
+  ]
+}

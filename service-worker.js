@@ -1,4 +1,4 @@
-const CACHE_NAME = 'score-tracker-v1.1.10';
+const CACHE_NAME = 'score-tracker-v2.0.0';
 
 self.addEventListener("install", event => {
   event.waitUntil(

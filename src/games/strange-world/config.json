@@ -1,0 +1,62 @@
+{
+  "headerIconFile": "header.svg",
+  "totalIconFile": "total.svg",
+  "categories": [
+    {
+      "id": "snowflakes",
+      "iconFile": "11.svg",
+      "color": "rgba(150, 150, 150, 0.3)",
+      "hintEN": "Score 1 star for each snowflake contained in your biggest snowflake range (= the group of cards with the most snowflakes orthogonally adjacent and contiguous).",
+      "hintUK": "Отримайте 1 зірку за кожну сніжинку у вашому найбільшому гірському хребті (= група карт з найбільшою кількістю сніжинок, які ортогонально межують одна з одною).",
+      "hintRU": "Получите 1 звезду за каждую снежинку в самом длинном горном хребте (= группа карт с наибольшим количеством снежинок, ортогонально прилегающих друг к другу)."
+    },
+    {
+      "id": "droplets",
+      "iconFile": "12.svg",
+      "color": "rgba(50, 150, 200, 0.3)",
+      "hintEN": "For each droplet, score 1 star for each orthogonally adjacent card to this droplet. Important: the cards with Tzimimes face up do not score any points.",
+      "hintUK": "За кожну краплю отримайте 1 зірку за кожну ортогонально сусідню до неї карту. Важливо: карти з відкритими Цзиміме (Tzimimes) не приносять очок.",
+      "hintRU": "За каждую каплю получите 1 звезду за каждую ортогонально соседнюю к ней карту. Важно: карты с открытыми Цимиме (Tzimimes) не приносят очков."
+    },
+    {
+      "id": "sprout",
+      "iconFile": "13.svg",
+      "color": "rgba(180, 150, 50, 0.3)",
+      "hintEN": "For each sprout, score 3 stars.",
+      "hintUK": "За кожен паросток отримайте 3 зірки.",
+      "hintRU": "За каждый росток получите 3 звезды."
+    },
+    {
+      "id": "animals",
+      "iconFile": "14.svg",
+      "color": "rgba(100, 180, 100, 0.3)",
+      "hintEN": "For each different animal in your World, score 2 stars.",
+      "hintUK": "За кожну різну тварину у вашому Світі отримайте 2 зірки.",
+      "hintRU": "За каждое уникальное животное в вашем Мире получите 2 звезды."
+    },
+    {
+      "id": "dots",
+      "iconFile": "15.svg",
+      "color": "rgba(50, 50, 80, 0.3)",
+      "hintEN": "For each dots-icon, score 2 stars for each icon on the card adjacent below and each occurrence of these icons in the column. If below it you have a Fumarole or a Tzimime face up, you score 0 stars.",
+      "hintUK": "За кожну таку іконку отримайте 2 зірки за кожну іконку на карті знизу та кожну появу цих іконок у стовпці. Якщо під цією картою є Фумарола або відкритий Цзиміме (Tzimime), ви отримуєте 0 зірок.",
+      "hintRU": "За каждую такую иконку получите 2 звезды за каждую иконку на карте снизу и каждое появление этих иконок в столбце. Если под ней карта с Фумаролой или открытым Цимиме, то вы получаете 0 звезд."
+    },
+    {
+      "id": "dark_cities",
+      "iconFile": "16.jpg",
+      "color": "rgba(150, 50, 50, 0.3)",
+      "hintEN": "Add the stars of your Dark Cities.",
+      "hintUK": "Додайте зірки ваших Темних Міст (Dark Cities).",
+      "hintRU": "Добавьте звезды ваших Темных Городов (Dark Cities)."
+    },
+    {
+      "id": "traveller",
+      "iconFile": "17.jpg",
+      "color": "rgba(200, 180, 250, 0.3)",
+      "hintEN": "Score 5 stars + X stars if the requirement described by the card in the 2 indicated rows by the arrows on the Traveller card is met in your completed World.",
+      "hintUK": "Отримайте 5 зірок + X зірок, якщо вимога, описана картою у 2 рядках, вказаних стрілками на карті Мандрівника (Traveller), виконана у вашому завершеному Світі.",
+      "hintRU": "Получите 5 звезд + X звезд, если требование, описанное картой в 2 рядах, указанных стрелками на карте Путешественника (Traveller), выполнено в вашем завершенном Мире."
+    }
+  ]
+}

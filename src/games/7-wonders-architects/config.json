@@ -1,0 +1,46 @@
+{
+  "headerIconFile": "category.png",
+  "totalIconFile": "total.png",
+  "categories": [
+    {
+      "id": "wonder",
+      "hintEN": "Points from constructed Wonder stages.",
+      "hintUK": "Очки за побудовані етапи Дива.",
+      "hintRU": "Очки за построенные этапы Чуда.",
+      "iconFile": "wonder.png",
+      "color": "rgba(200, 200, 100, 0.3)"
+    },
+    {
+      "id": "cat",
+      "hintEN": "2 points if you hold the Cat pawn.",
+      "hintUK": "2 очки, якщо у вас фігурка Кота.",
+      "hintRU": "2 очка, если у вас фигурка Кота.",
+      "iconFile": "cat.png",
+      "color": "rgba(128, 128, 128, 0.3)"
+    },
+    {
+      "id": "politics",
+      "hintEN": "Points from Politics (Blue) cards.",
+      "hintUK": "Очки з Політичних (синіх) карт.",
+      "hintRU": "Очки с Политических (синих) карт.",
+      "iconFile": "politics.png",
+      "color": "rgba(50, 150, 200, 0.3)"
+    },
+    {
+      "id": "military",
+      "hintEN": "Points from Military Victory tokens.",
+      "hintUK": "Очки з Жетонів військових перемог.",
+      "hintRU": "Очки с Жетонов военных побед.",
+      "iconFile": "military.png",
+      "color": "rgba(255, 100, 100, 0.3)"
+    },
+    {
+      "id": "progress",
+      "hintEN": "Points from progress tokens.",
+      "hintUK": "Очки з жетонів прогресу.",
+      "hintRU": "Очки с жетонов прогресса.",
+      "iconFile": "progress.png",
+      "color": "rgba(100, 200, 100, 0.3)"
+    }
+  ]
+}

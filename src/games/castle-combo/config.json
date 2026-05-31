@@ -1,0 +1,56 @@
+{
+  "headerIconFile": "header.svg",
+  "totalIconFile": "total.svg",
+  "categories": [
+    {
+      "id": "pos-1",
+      "iconFile": "pos-1.svg",
+      "color": "rgba(210, 229, 241, 0.6)"
+    },
+    {
+      "id": "pos-2",
+      "iconFile": "pos-2.svg",
+      "color": "rgba(210, 229, 241, 0.8)"
+    },
+    {
+      "id": "pos-3",
+      "iconFile": "pos-3.svg",
+      "color": "rgba(210, 229, 241, 0.6)"
+    },
+    {
+      "id": "pos-4",
+      "iconFile": "pos-4.svg",
+      "color": "rgba(210, 229, 241, 0.8)"
+    },
+    {
+      "id": "pos-5",
+      "iconFile": "pos-5.svg",
+      "color": "rgba(210, 229, 241, 0.6)"
+    },
+    {
+      "id": "pos-6",
+      "iconFile": "pos-6.svg",
+      "color": "rgba(210, 229, 241, 0.8)"
+    },
+    {
+      "id": "pos-7",
+      "iconFile": "pos-7.svg",
+      "color": "rgba(210, 229, 241, 0.6)"
+    },
+    {
+      "id": "pos-8",
+      "iconFile": "pos-8.svg",
+      "color": "rgba(210, 229, 241, 0.8)"
+    },
+    {
+      "id": "pos-9",
+      "iconFile": "pos-9.svg",
+      "color": "rgba(210, 229, 241, 0.6)"
+    },
+    {
+      "id": "keys",
+      "iconFile": "key.svg",
+      "color": "rgba(210, 229, 241, 0.8)"
+    }
+  ]
+}

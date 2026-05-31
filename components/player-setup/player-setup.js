@@ -1,4 +1,4 @@
-import { getValue, saveValue, getSavedPlayerNames, savePlayerName } from '../../storage.service.js';
+import { getValue, saveValue, getSavedPlayerNames, savePlayerName, loadGameBundle } from '../../storage.service.js';
 import { t, getLanguage } from '../../ui.i18n.service.js';
 
 class PlayerSetup extends HTMLElement {
@@ -11,11 +11,16 @@ class PlayerSetup extends HTMLElement {
     this.savedNames = [];
   }
 
-  connectedCallback() {
+  async connectedCallback() {
     this.game = getValue('selected_game');
     if (!this.game) {
       location.hash = '';
       return;
+    }
+    
+    if (!this.game.config) {
+      this.game.config = await loadGameBundle(this.game);
+      saveValue('selected_game', this.game);
     }
     
     this.savedNames = getSavedPlayerNames();
@@ -192,15 +197,29 @@ class PlayerSetup extends HTMLElement {
           </div>
           
           <div class="players-list">
-            ${this.playerNames.map((name, i) => `
+            ${this.playerNames.map((name, i) => {
+              let colorIndicator = '';
+              if (this.game.config && this.game.config.colors && this.game.config.colors[i]) {
+                const color = this.game.config.colors[i];
+                // Extract base color without transparency if it's rgba, or just use as is
+                let displayColor = color;
+                if (color.startsWith('rgba')) {
+                   // Optional: We can just use the rgba color directly, since the background is dark.
+                   // The 0.5 opacity will make it a bit muted, which is fine, or we can replace the alpha channel to 1 for the indicator
+                   displayColor = color.replace(/[\d\.]+\)$/g, '1)');
+                }
+                colorIndicator = `<div style="width: 24px; height: 24px; border-radius: 50%; background-color: ${displayColor}; border: 2px solid #000; outline: 2px solid #fff; flex-shrink: 0; margin: 2px;"></div>`;
+              }
+              return `
               <div class="player-input-row">
                 <div class="player-number">${i + 1}.</div>
+                ${colorIndicator}
                 <div class="input-wrapper typeahead-container">
                   <input type="text" id="player-input-${i}" value="${name}" placeholder="${t('name_placeholder')}" autocomplete="off" />
                   <div id="typeahead-${i}"></div>
                 </div>
               </div>
-            `).join('')}
+            `}).join('')}
           </div>
         </div>
         

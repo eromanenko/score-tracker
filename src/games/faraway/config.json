@@ -1,0 +1,78 @@
+{
+  "headerIconFile": "character.png",
+  "totalIconFile": "total.svg",
+  "categories": [
+    {
+      "id": "card1",
+      "hintEN": "Points from Region Card 1",
+      "hintUK": "Очки з 1-ї карти Регіону",
+      "hintRU": "Очки с 1-й карты Региона",
+      "iconFile": "1.svg",
+      "color": "rgba(0,0,0,0.02)"
+    },
+    {
+      "id": "card2",
+      "hintEN": "Points from Region Card 2",
+      "hintUK": "Очки з 2-ї карти Регіону",
+      "hintRU": "Очки с 2-й карты Региона",
+      "iconFile": "2.svg",
+      "color": "rgba(255,255,255,0.02)"
+    },
+    {
+      "id": "card3",
+      "hintEN": "Points from Region Card 3",
+      "hintUK": "Очки з 3-ї карти Регіону",
+      "hintRU": "Очки с 3-й карты Региона",
+      "iconFile": "3.svg",
+      "color": "rgba(0,0,0,0.02)"
+    },
+    {
+      "id": "card4",
+      "hintEN": "Points from Region Card 4",
+      "hintUK": "Очки з 4-ї карти Регіону",
+      "hintRU": "Очки с 4-й карты Региона",
+      "iconFile": "4.svg",
+      "color": "rgba(255,255,255,0.02)"
+    },
+    {
+      "id": "card5",
+      "hintEN": "Points from Region Card 5",
+      "hintUK": "Очки з 5-ї карти Регіону",
+      "hintRU": "Очки с 5-й карты Региона",
+      "iconFile": "5.svg",
+      "color": "rgba(0,0,0,0.02)"
+    },
+    {
+      "id": "card6",
+      "hintEN": "Points from Region Card 6",
+      "hintUK": "Очки з 6-ї карти Регіону",
+      "hintRU": "Очки с 6-й карты Региона",
+      "iconFile": "6.svg",
+      "color": "rgba(255,255,255,0.02)"
+    },
+    {
+      "id": "card7",
+      "hintEN": "Points from Region Card 7",
+      "hintUK": "Очки з 7-ї карти Регіону",
+      "hintRU": "Очки с 7-й карты Региона",
+      "iconFile": "7.svg",
+      "color": "rgba(0,0,0,0.02)"
+    },
+    {
+      "id": "card8",
+      "hintEN": "Points from Region Card 8",
+      "hintUK": "Очки з 8-ї карти Регіону",
+      "hintRU": "Очки с 8-й карты Региона",
+      "iconFile": "8.svg",
+      "color": "rgba(255,255,255,0.02)"
+    },
+    {
+      "id": "sanctuary",
+      "hintEN": "Points from Sanctuaries",
+      "hintUK": "Очки зі Святилищ",
+      "hintRU": "Очки со Святилищ",
+      "iconFile": "sanctuary.png",
+      "color": "rgba(100,100,100,0.2)"
+    }
+  ]
+}

@@ -149,7 +149,12 @@ export function savePlayerName(name) {
 
 // Settings
 export function getTheme() {
-    return getValue('theme') || 'dark'; // 'dark' or 'light'
+    const stored = getValue('theme');
+    if (stored) return stored;
+    if (window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches) {
+        return 'dark';
+    }
+    return 'light';
 }
 
 export function setTheme(theme) {

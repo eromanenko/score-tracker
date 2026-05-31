@@ -1,0 +1,19 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="16 0 68 92">
+  <!-- Grid -->
+  <g stroke="#e6dbca" stroke-width="4" fill="#fdfaf1">
+    <rect x="20" y="10" width="20" height="26" />
+    <rect x="40" y="10" width="20" height="26" />
+    <rect x="60" y="10" width="20" height="26" />
+    <rect x="20" y="36" width="20" height="26" />
+    <rect x="40" y="36" width="20" height="26" />
+    <rect x="60" y="36" width="20" height="26" />
+    <rect x="20" y="62" width="20" height="26" />
+    <rect x="40" y="62" width="20" height="26" />
+    <rect x="60" y="62" width="20" height="26" />
+  </g>
+  <!-- Pin -->
+  <g transform="translate(70, 53)">
+    <path d="M 0 0 C -6 -8 -8 -12 -8 -16 C -8 -21 -4 -25 0 -25 C 4 -25 8 -21 8 -16 C 8 -12 6 -8 0 0 Z" fill="#5c3a21" />
+    <circle cx="0" cy="-17" r="2.5" fill="#fff" />
+  </g>
+</svg>

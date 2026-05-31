@@ -1,5 +1,5 @@
 {
-  "version": "1.1.10",
+  "version": "2.0.0",
   "games": [
     {
       "id": "7-wonders",
@@ -13,6 +13,17 @@
       "bundleUrl": "./assets/games/7-wonders.zip"
     },
     {
+      "id": "7-wonders-architects",
+      "nameEN": "7 Wonders: Architects",
+      "nameUK": "7 Чудес: Архітектори",
+      "nameRU": "7 Чудес: Архитекторы",
+      "minPlayers": 2,
+      "maxPlayers": 7,
+      "scoringType": "category",
+      "iconUrl": "🏗️",
+      "bundleUrl": "./assets/games/7-wonders-architects.zip"
+    },
+    {
       "id": "strange-world",
       "nameEN": "Strange World Above the Clouds",
       "nameUK": "Дивовижний світ над хмарами",
@@ -22,6 +33,50 @@
       "scoringType": "category",
       "iconUrl": "🌗",
       "bundleUrl": "./assets/games/strange-world.zip"
+    },
+    {
+      "id": "dixit",
+      "nameEN": "Dixit",
+      "nameUK": "Діксіт",
+      "nameRU": "Диксит",
+      "minPlayers": 3,
+      "maxPlayers": 12,
+      "scoringType": "tracker",
+      "iconUrl": "🐰",
+      "bundleUrl": "./assets/games/dixit.zip"
+    },
+    {
+      "id": "alices-garden",
+      "nameEN": "Alice's Garden",
+      "nameUK": "Сад Аліси",
+      "nameRU": "Сад Алисы",
+      "minPlayers": 1,
+      "maxPlayers": 4,
+      "scoringType": "category",
+      "iconUrl": "🌹",
+      "bundleUrl": "./assets/games/alices-garden.zip"
+    },
+    {
+      "id": "faraway",
+      "nameEN": "Faraway",
+      "nameUK": "Небокрай",
+      "nameRU": "Дальние дали",
+      "minPlayers": 2,
+      "maxPlayers": 6,
+      "scoringType": "category",
+      "iconUrl": "🗺️",
+      "bundleUrl": "./assets/games/faraway.zip"
+    },
+    {
+      "id": "isle-of-cats",
+      "nameEN": "The Isle of Cats",
+      "nameUK": "Острів Котів",
+      "nameRU": "Остров Кошек",
+      "minPlayers": 1,
+      "maxPlayers": 6,
+      "scoringType": "category",
+      "iconUrl": "🐈",
+      "bundleUrl": "./assets/games/isle-of-cats.zip"
     },
     {
       "id": "take-6",
@@ -77,6 +132,17 @@
       "scoringType": "tracker",
       "iconUrl": "↕️",
       "bundleUrl": "./assets/games/dnup.zip"
+    },
+    {
+      "id": "hadara",
+      "nameEN": "Hadara",
+      "nameUK": "Хадара",
+      "nameRU": "Хадара",
+      "minPlayers": 2,
+      "maxPlayers": 5,
+      "scoringType": "category",
+      "iconUrl": "🏺",
+      "bundleUrl": "./assets/games/hadara.zip"
     }
   ]
 }

@@ -37,6 +37,8 @@ class CategoryScorer extends HTMLElement {
         const val = p.categoryScores[c.id];
         if (c.divider) {
           total += Math.floor(val / c.divider);
+        } else if (c.multiplier !== undefined) {
+          total += val * c.multiplier;
         } else {
           total += val;
         }
@@ -131,7 +133,7 @@ class CategoryScorer extends HTMLElement {
           margin-right: 0;
         }
         
-        td:first-child.icon-only {
+        th:first-child.icon-only, td:first-child.icon-only {
           text-align: center;
           padding: 0.25rem;
         }
@@ -159,13 +161,17 @@ class CategoryScorer extends HTMLElement {
           <table>
             <thead>
               <tr>
-                <th>${this.game.config.headerIconBlobUrl ? `<img src="${this.game.config.headerIconBlobUrl}" alt="${t('categories')}" style="height:1.5rem; vertical-align:middle;">` : t('categories')}</th>
+                <th class="${this.game.config.headerIconBlobUrl ? 'icon-only' : ''}">${this.game.config.headerIconBlobUrl ? `<img src="${this.game.config.headerIconBlobUrl}" alt="${t('categories')}" style="height:1.5rem; vertical-align:middle;">` : t('categories')}</th>
                 ${this.players.map(p => `<th>${p.name}</th>`).join('')}
               </tr>
             </thead>
             <tbody>
               ${this.categories.map((cat, index) => {
-                const displayName = cat['name' + lang] || (cat.nameEN !== undefined ? cat.nameEN : cat.id);
+                let displayName = cat['name' + lang] ?? cat.nameEN;
+                if (displayName == null) {
+                  const hasIcon = cat.iconBlobUrl || cat.icon;
+                  displayName = hasIcon ? "" : cat.id;
+                }
                 const hasName = displayName.trim().length > 0;
                 return `
                 <tr style="${cat.color ? `background-color: ${cat.color};` : ''}">
@@ -173,6 +179,7 @@ class CategoryScorer extends HTMLElement {
                     <span class="cat-icon ${hasName ? '' : 'large'}">${cat.iconBlobUrl ? `<img src="${cat.iconBlobUrl}" alt="${cat.id}">` : (cat.icon || '')}</span>
                     ${hasName ? displayName : ''}
                     ${cat.divider ? ` (/${cat.divider})` : ''}
+                    ${cat.multiplier !== undefined ? ` (x${cat.multiplier})` : ''}
                   </td>
                   ${this.players.map((p, i) => `
                     <td>

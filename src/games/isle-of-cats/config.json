@@ -1,0 +1,88 @@
+{
+  "headerIconFile": "header.svg",
+  "categories": [
+    {
+      "id": "blue",
+      "hintEN": "Points for Blue Families (3 cats: 8, 4: 11, 5: 15, 6+: +5 ea)",
+      "hintUK": "Очки за Сині сім'ї (3 коти: 8, 4: 11, 5: 15, 6+: +5 за кожного)",
+      "hintRU": "Очки за Синие семьи (3 кота: 8, 4: 11, 5: 15, 6+: +5 за каждого)",
+      "iconFile": "blue.svg",
+      "color": "rgba(59,130,246,0.1)"
+    },
+    {
+      "id": "green",
+      "hintEN": "Points for Green Families (3 cats: 8, 4: 11, 5: 15, 6+: +5 ea)",
+      "hintUK": "Очки за зелені сім'ї (3 коти: 8, 4: 11, 5: 15, 6+: +5 за кожного)",
+      "hintRU": "Очки за зеленые семьи (3 кота: 8, 4: 11, 5: 15, 6+: +5 за каждого)",
+      "iconFile": "green.svg",
+      "color": "rgba(16,185,129,0.1)"
+    },
+    {
+      "id": "orange",
+      "hintEN": "Points for Orange Families (3 cats: 8, 4: 11, 5: 15, 6+: +5 ea)",
+      "hintUK": "Очки за помаранчеві сім'ї (3 коти: 8, 4: 11, 5: 15, 6+: +5 за кожного)",
+      "hintRU": "Очки за оранжевые семьи (3 кота: 8, 4: 11, 5: 15, 6+: +5 за каждого)",
+      "iconFile": "orange.svg",
+      "color": "rgba(245,158,11,0.1)"
+    },
+    {
+      "id": "purple",
+      "hintEN": "Points for Purple Families (3 cats: 8, 4: 11, 5: 15, 6+: +5 ea)",
+      "hintUK": "Очки за фіолетові сім'ї (3 коти: 8, 4: 11, 5: 15, 6+: +5 за кожного)",
+      "hintRU": "Очки за фиолетовые семьи (3 кота: 8, 4: 11, 5: 15, 6+: +5 за каждого)",
+      "iconFile": "purple.svg",
+      "color": "rgba(168,85,247,0.1)"
+    },
+    {
+      "id": "red",
+      "hintEN": "Points for Red Families (3 cats: 8, 4: 11, 5: 15, 6+: +5 ea)",
+      "hintUK": "Очки за червоні сім'ї (3 коти: 8, 4: 11, 5: 15, 6+: +5 за кожного)",
+      "hintRU": "Очки за красные семьи (3 кота: 8, 4: 11, 5: 15, 6+: +5 за каждого)",
+      "iconFile": "red.svg",
+      "color": "rgba(239,68,68,0.1)"
+    },
+    {
+      "id": "treasure",
+      "hintEN": "Count of Rare Treasures (3 pts each)",
+      "hintUK": "Кількість рідкісних скарбів (3 очки за кожен)",
+      "hintRU": "Количество редких сокровищ (3 очка за каждое)",
+      "iconFile": "treasure.svg",
+      "color": "rgba(252,211,77,0.1)",
+      "multiplier": 3
+    },
+    {
+      "id": "lessons",
+      "hintEN": "Points from Your Lessons",
+      "hintUK": "Очки за Ваші уроки",
+      "hintRU": "Очки за ваши уроки",
+      "iconFile": "lessons.svg",
+      "color": "rgba(37,99,235,0.1)"
+    },
+    {
+      "id": "public_lessons",
+      "hintEN": "Points from Public Lessons",
+      "hintUK": "Очки за спільні уроки",
+      "hintRU": "Очки за общие уроки",
+      "iconFile": "public_lessons.svg",
+      "color": "rgba(5,150,105,0.1)"
+    },
+    {
+      "id": "rats",
+      "hintEN": "Count of Rats (penalty of -1 point each)",
+      "hintUK": "Кількість щурів (штраф -1 очко за кожного)",
+      "hintRU": "Количество крыс (штраф -1 очко за каждую)",
+      "iconFile": "rats.svg",
+      "color": "rgba(75,85,99,0.1)",
+      "multiplier": -1
+    },
+    {
+      "id": "rooms",
+      "hintEN": "Count of Uncompleted Rooms (penalty of -5 points each)",
+      "hintUK": "Кількість незавершених кімнат (штраф -5 очок за кожну)",
+      "hintRU": "Количество незавершенных комнат (штраф -5 очков за каждую)",
+      "iconFile": "rooms.svg",
+      "color": "rgba(139,92,246,0.1)",
+      "multiplier": -5
+    }
+  ]
+}
