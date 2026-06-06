@@ -16,7 +16,9 @@
       "hintUK": "2 очки, якщо у вас фігурка Кота.",
       "hintRU": "2 очка, если у вас фигурка Кота.",
       "iconFile": "cat.png",
-      "color": "rgba(128, 128, 128, 0.3)"
+      "color": "rgba(128, 128, 128, 0.3)",
+      "categoryType": "radio",
+      "actionValue": 2
     },
     {
       "id": "politics",
@@ -28,11 +30,13 @@
     },
     {
       "id": "military",
-      "hintEN": "Points from Military Victory tokens.",
-      "hintUK": "Очки з Жетонів військових перемог.",
-      "hintRU": "Очки с Жетонов военных побед.",
+      "hintEN": "Number of Military Victory tokens.",
+      "hintUK": "Кількість жетонів військових перемог.",
+      "hintRU": "Количество жетонов военных побед.",
       "iconFile": "military.png",
-      "color": "rgba(255, 100, 100, 0.3)"
+      "color": "rgba(255, 100, 100, 0.3)",
+      "categoryType": "multiplier",
+      "actionValue": 3
     },
     {
       "id": "progress",

@@ -49,7 +49,8 @@
       "hintEN": "Amount of coins. For every 5 coins left, get 1 VP",
       "hintUK": "Кількість монет. За кожні 5 монет, що у вас залишились, отримайте 1 ПО",
       "hintRU": "Количество монет. За каждые 5 оставшихся монет получите 1 ПО",
-      "divider": 5
+      "categoryType": "divider",
+      "actionValue": 5
     }
   ]
 }

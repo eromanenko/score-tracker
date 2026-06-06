@@ -9,7 +9,8 @@
       "hintRU": "Количество шахматных фигур на клетках доски (5 очков за каждую)",
       "iconFile": "chess.svg",
       "color": "rgba(34,197,94,0.1)",
-      "multiplier": 5
+      "categoryType": "multiplier",
+      "actionValue": 5
     },
     {
       "id": "roses",
@@ -26,7 +27,8 @@
       "hintRU": "Количество колонок с 2+ Грибами (8 очков за каждую)",
       "iconFile": "mushroom.svg",
       "color": "rgba(34,197,94,0.1)",
-      "multiplier": 8
+      "categoryType": "multiplier",
+      "actionValue": 8
     },
     {
       "id": "trees",
@@ -43,7 +45,8 @@
       "hintRU": "Количество пустых изолированных участков (-5 очков за каждый)",
       "iconFile": "empty.svg",
       "color": "rgba(239,68,68,0.1)",
-      "multiplier": -5
+      "categoryType": "multiplier",
+      "actionValue": -5
     },
     {
       "id": "bonus",
@@ -52,7 +55,8 @@
       "hintRU": "Количество неиспользованных бонусных тайлов (-5 очков за каждый)",
       "iconFile": "bonus.svg",
       "color": "rgba(239,68,68,0.1)",
-      "multiplier": -5
+      "categoryType": "multiplier",
+      "actionValue": -5
     }
   ]
 }

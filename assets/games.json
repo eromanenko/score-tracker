@@ -1,5 +1,5 @@
 {
-  "version": "2.0.0",
+  "version": "2.1.1",
   "games": [
     {
       "id": "7-wonders",
@@ -143,6 +143,17 @@
       "scoringType": "category",
       "iconUrl": "🏺",
       "bundleUrl": "./assets/games/hadara.zip"
+    },
+    {
+      "id": "ttr-europe",
+      "nameEN": "Ticket to Ride: Europe",
+      "nameUK": "Квиток на поїзд: Європа",
+      "nameRU": "Билет на поезд: Европа",
+      "minPlayers": 2,
+      "maxPlayers": 5,
+      "scoringType": "category",
+      "iconUrl": "🚂",
+      "bundleUrl": "./assets/games/ttr-europe.zip"
     }
   ]
 }

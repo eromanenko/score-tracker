@@ -48,7 +48,8 @@
       "hintRU": "Количество редких сокровищ (3 очка за каждое)",
       "iconFile": "treasure.svg",
       "color": "rgba(252,211,77,0.1)",
-      "multiplier": 3
+      "categoryType": "multiplier",
+      "actionValue": 3
     },
     {
       "id": "lessons",
@@ -73,7 +74,8 @@
       "hintRU": "Количество крыс (штраф -1 очко за каждую)",
       "iconFile": "rats.svg",
       "color": "rgba(75,85,99,0.1)",
-      "multiplier": -1
+      "categoryType": "multiplier",
+      "actionValue": -1
     },
     {
       "id": "rooms",
@@ -82,7 +84,8 @@
       "hintRU": "Количество незавершенных комнат (штраф -5 очков за каждую)",
       "iconFile": "rooms.svg",
       "color": "rgba(139,92,246,0.1)",
-      "multiplier": -5
+      "categoryType": "multiplier",
+      "actionValue": -5
     }
   ]
 }

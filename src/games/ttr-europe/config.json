@@ -1,0 +1,42 @@
+{
+  "headerIconFile": "train.svg",
+  "totalIconFile": "total.svg",
+  "categories": [
+    {
+      "id": "trains",
+      "hintEN": "Points for placed trains",
+      "hintUK": "Бали за вагони",
+      "hintRU": "Очки за вагоны",
+      "iconFile": "vagon.svg",
+      "color": "rgba(239, 68, 68, 0.3)"
+    },
+    {
+      "id": "tickets",
+      "hintEN": "Points for completed or failed destination tickets",
+      "hintUK": "Бали за виконані завдання (може бути від'ємним)",
+      "hintRU": "Очки за выполненные маршруты (может быть отрицательным)",
+      "iconFile": "path.svg",
+      "color": "rgba(59, 130, 246, 0.3)"
+    },
+    {
+      "id": "longest-path",
+      "hintEN": "Longest continuous path (+10 pts)",
+      "hintUK": "Найдовший шлях (+10 балів)",
+      "hintRU": "Самый длинный путь (+10 очков)",
+      "iconFile": "railroad.svg",
+      "color": "rgba(16, 185, 129, 0.3)",
+      "categoryType": "checkbox",
+      "actionValue": 10
+    },
+    {
+      "id": "stations",
+      "hintEN": "Unused stations (x4 pts)",
+      "hintUK": "Кількість станцій що залишилась (x4 бали)",
+      "hintRU": "Оставшиеся станции (x4 очка)",
+      "iconFile": "station.svg",
+      "color": "rgba(245, 158, 11, 0.3)",
+      "categoryType": "multiplier",
+      "actionValue": 4
+    }
+  ]
+}

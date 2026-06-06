@@ -30,17 +30,43 @@ class CategoryScorer extends HTMLElement {
     this.calculateTotals();
   }
 
+  handleToggle(playerId, catId, type) {
+    if (type === 'radio') {
+      this.players.forEach((p, i) => {
+        if (i === playerId) {
+          p.categoryScores[catId] = p.categoryScores[catId] ? 0 : 1;
+        } else {
+          p.categoryScores[catId] = 0;
+        }
+        const cell = this.shadowRoot.getElementById(`check-${i}-${catId}`);
+        if (cell) cell.textContent = p.categoryScores[catId] ? '✔️' : '';
+      });
+    } else {
+      this.players[playerId].categoryScores[catId] = this.players[playerId].categoryScores[catId] ? 0 : 1;
+      const cell = this.shadowRoot.getElementById(`check-${playerId}-${catId}`);
+      if (cell) cell.textContent = this.players[playerId].categoryScores[catId] ? '✔️' : '';
+    }
+    
+    this.calculateTotals();
+  }
+
   calculateTotals() {
     this.players.forEach(p => {
       let total = 0;
       this.categories.forEach(c => {
         const val = p.categoryScores[c.id];
-        if (c.divider) {
-          total += Math.floor(val / c.divider);
-        } else if (c.multiplier !== undefined) {
-          total += val * c.multiplier;
+        const type = c.categoryType || 'points';
+        
+        if (type === 'divider' && c.actionValue) {
+          total += Math.floor(val / c.actionValue);
+        } else if (type === 'multiplier' && c.actionValue !== undefined) {
+          total += val * c.actionValue;
+        } else if (type === 'checkbox' || type === 'radio') {
+          if (val) {
+            total += (c.actionValue || 0);
+          }
         } else {
-          total += val;
+          total += (Number(val) || 0);
         }
       });
       p.score = total;
@@ -105,6 +131,26 @@ class CategoryScorer extends HTMLElement {
           text-align: center;
           padding: 0.5rem;
           background: rgba(255, 255, 255, 0.05);
+        }
+        
+        .check-box {
+          width: 42px;
+          height: 42px;
+          margin: 0 auto;
+          display: flex;
+          align-items: center;
+          justify-content: center;
+          background: var(--input-bg);
+          border: 1px solid var(--surface-border);
+          border-radius: var(--radius-sm);
+          cursor: pointer;
+          font-size: 1.5rem;
+          user-select: none;
+          transition: var(--transition-smooth);
+        }
+        
+        .check-box:hover {
+          border-color: var(--primary-color);
         }
         
         .total-row {
@@ -178,14 +224,21 @@ class CategoryScorer extends HTMLElement {
                   <td class="${hasName ? '' : 'icon-only'} category-header" data-cat="${index}" style="${cat.color ? `background-color: ${cat.color};` : ''} cursor: pointer;">
                     <span class="cat-icon ${hasName ? '' : 'large'}">${cat.iconBlobUrl ? `<img src="${cat.iconBlobUrl}" alt="${cat.id}">` : (cat.icon || '')}</span>
                     ${hasName ? displayName : ''}
-                    ${cat.divider ? ` (/${cat.divider})` : ''}
-                    ${cat.multiplier !== undefined ? ` (x${cat.multiplier})` : ''}
+                    ${cat.categoryType === 'divider' ? ` (/${cat.actionValue})` : ''}
+                    ${cat.categoryType === 'multiplier' ? ` (x${cat.actionValue})` : ''}
+                    ${(cat.categoryType === 'checkbox' || cat.categoryType === 'radio') ? ` (${cat.actionValue > 0 ? '+' : ''}${cat.actionValue})` : ''}
                   </td>
                   ${this.players.map((p, i) => `
-                    <td>
-                      <input type="number" 
-                             value="${p.categoryScores[cat.id] || ''}" 
-                             id="input-${i}-${cat.id}" />
+                    <td style="text-align: center;">
+                      ${['checkbox', 'radio'].includes(cat.categoryType) ? `
+                        <div class="check-box" id="check-${i}-${cat.id}" data-player="${i}" data-cat="${cat.id}" data-type="${cat.categoryType}">
+                          ${p.categoryScores[cat.id] ? '✔️' : ''}
+                        </div>
+                      ` : `
+                        <input type="number" 
+                               value="${p.categoryScores[cat.id] || ''}" 
+                               id="input-${i}-${cat.id}" />
+                      `}
                     </td>
                   `).join('')}
                 </tr>
@@ -208,8 +261,13 @@ class CategoryScorer extends HTMLElement {
     // Attach listeners
     this.categories.forEach((cat, idx) => {
       this.players.forEach((p, i) => {
-        const input = this.shadowRoot.getElementById(`input-${i}-${cat.id}`);
-        input.addEventListener('input', (e) => this.handleInput(i, cat.id, e.target.value));
+        if (['checkbox', 'radio'].includes(cat.categoryType)) {
+          const cell = this.shadowRoot.getElementById(`check-${i}-${cat.id}`);
+          if (cell) cell.addEventListener('click', () => this.handleToggle(i, cat.id, cat.categoryType));
+        } else {
+          const input = this.shadowRoot.getElementById(`input-${i}-${cat.id}`);
+          if (input) input.addEventListener('input', (e) => this.handleInput(i, cat.id, e.target.value));
+        }
       });
     });
 
