@@ -1,6 +1,6 @@
 {
   "name": "score-tracker",
-  "version": "2.1.1",
+  "version": "2.1.3",
   "description": "Кожна гра у додатку використовує певний тип підрахунку балів (`scoringType`), який визначається у файлі `assets/games.json`. Детальні правила поведінки гри та відображення елементів задаються у конфігураційному файлі `config.json` всередині ZIP-архіву гри (наприклад, `assets/games/star-realms.zip`).",
   "main": "main.js",
   "scripts": {
