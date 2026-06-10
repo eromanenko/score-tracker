@@ -91,7 +91,7 @@ input[type="text"], input[type="number"] {
   color: var(--text-primary);
   font-family: var(--font-main);
   font-size: 1rem;
-  padding: 0.75rem 1.25rem;
+  padding: 0.5rem 0.75rem;
   border-radius: var(--radius-sm);
   outline: none;
   transition: var(--transition-smooth);
@@ -138,6 +138,13 @@ button.secondary {
 
 button.secondary:hover, button.secondary:active {
   background: var(--btn-secondary-hover);
+}
+
+button:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+  transform: none !important;
+  box-shadow: none !important;
 }
 
 /* Specific Layout Utilities */

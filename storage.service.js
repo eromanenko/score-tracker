@@ -43,13 +43,21 @@ export async function loadGames() {
         if (localVersion !== data.version) {
             console.log(`Games updated to version ${data.version}. Clearing cache...`);
             const db = await dbPromise;
-            await db.clear('store');
+            // Only clear system games cache, not custom games!
+            const keys = await db.getAllKeys('store');
+            for (let key of keys) {
+                const customGames = getCustomGames();
+                const isCustom = customGames.some(cg => `bundle_${cg.id}` === key);
+                if (!isCustom) {
+                    await db.delete('store', key);
+                }
+            }
             saveValue('games_version', data.version);
         }
         
         window.dispatchEvent(new CustomEvent('version-loaded', { detail: data.version }));
         
-        return data.games;
+        return data.games.concat(getCustomGames());
     } catch (err) {
         console.error("Failed to load games index", err);
         return [];
@@ -139,6 +147,32 @@ export async function loadGameBundle(game) {
 // Player Names Typeahead
 export function getSavedPlayerNames() {
     return getValue('saved_player_names') || [];
+}
+
+// Custom Games
+export function getCustomGames() {
+    return getValue('custom_games') || [];
+}
+
+export async function saveCustomGame(gameMeta, bundleArrayBuffer) {
+    let customGames = getCustomGames();
+    gameMeta.isCustom = true;
+    const existingIndex = customGames.findIndex(g => g.id === gameMeta.id);
+    if (existingIndex >= 0) {
+        customGames[existingIndex] = gameMeta;
+    } else {
+        customGames.push(gameMeta);
+    }
+    saveValue('custom_games', customGames);
+    await saveDbValue(`bundle_${gameMeta.id}`, bundleArrayBuffer);
+}
+
+export async function deleteCustomGame(gameId) {
+    let customGames = getCustomGames();
+    customGames = customGames.filter(g => g.id !== gameId);
+    saveValue('custom_games', customGames);
+    const db = await dbPromise;
+    await db.delete('store', `bundle_${gameId}`);
 }
 
 export function savePlayerName(name) {

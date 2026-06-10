@@ -63,7 +63,7 @@ class CategoryScorer extends HTMLElement {
           total += val * c.actionValue;
         } else if (type === 'checkbox' || type === 'radio') {
           if (val) {
-            total += (c.actionValue || 0);
+            total += (Number(c.actionValue) || 0);
           }
         } else {
           total += (Number(val) || 0);

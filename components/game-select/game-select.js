@@ -1,4 +1,5 @@
-import { loadGames, saveValue, getValue, getFilterMode, getDisabledGames, toggleGameDisabled } from '../../storage.service.js';
+import { loadGames, saveValue, getValue, getFilterMode, getDisabledGames, toggleGameDisabled, deleteCustomGame } from '../../storage.service.js';
+import { showConfirm, showToast } from '../../modal.service.js';
 import { t, getLanguage } from '../../ui.i18n.service.js';
 
 class GameSelect extends HTMLElement {
@@ -95,6 +96,63 @@ class GameSelect extends HTMLElement {
           accent-color: var(--primary-color);
         }
         
+        .game-delete {
+          position: absolute;
+          top: 0.5rem;
+          left: 0.5rem;
+          z-index: 2;
+          background: rgba(255, 0, 0, 0.2);
+          border: none;
+          color: white;
+          width: 1.5rem;
+          height: 1.5rem;
+          border-radius: 50%;
+          cursor: pointer;
+          display: flex;
+          align-items: center;
+          justify-content: center;
+          font-size: 0.8rem;
+          transition: var(--transition-smooth);
+        }
+        
+        .game-delete:hover {
+          background: rgba(255, 0, 0, 0.8);
+        }
+
+        .game-edit {
+          position: absolute;
+          top: 0.5rem;
+          left: 2.5rem;
+          z-index: 2;
+          background: rgba(255, 255, 255, 0.2);
+          border: none;
+          color: white;
+          width: 1.5rem;
+          height: 1.5rem;
+          border-radius: 50%;
+          cursor: pointer;
+          display: flex;
+          align-items: center;
+          justify-content: center;
+          font-size: 0.8rem;
+          transition: var(--transition-smooth);
+        }
+
+        .game-edit:hover {
+          background: rgba(255, 255, 255, 0.4);
+        }
+
+        .add-game-card {
+          justify-content: center;
+          flex-direction: column;
+          border: 2px dashed var(--surface-border);
+          background: transparent;
+        }
+        
+        .add-game-card:hover {
+          background: rgba(255, 255, 255, 0.05);
+        }
+        
         .game-icon {
           font-size: 2.5rem;
           width: 3rem;
@@ -143,6 +201,10 @@ class GameSelect extends HTMLElement {
             const isDisabled = disabledGames.includes(game.id);
             return `
             <div class="game-card glass-panel ${filterMode === 'all' && isDisabled ? 'disabled' : ''}" data-id="${game.id}">
+              ${filterMode === 'all' && game.isCustom ? `
+                <button class="game-delete" data-delete="${game.id}" title="${t('delete')}">✕</button>
+                <button class="game-edit" data-edit="${game.id}" title="${t('edit', {}, 'Edit')}">✏️</button>
+              ` : ''}
               ${filterMode === 'all' ? `
                 <div class="game-checkbox" data-checkbox="${game.id}">
                   <input type="checkbox" ${!isDisabled ? 'checked' : ''}>
@@ -157,8 +219,18 @@ class GameSelect extends HTMLElement {
               </div>
             </div>
           `}).join('')}
+          ${filterMode === 'all' ? `
+            <div class="game-card glass-panel add-game-card" id="btn-add-game">
+              <div class="game-icon" style="font-size: 2rem;">➕</div>
+              <div class="game-info" style="text-align: center; margin-top: 0.5rem;">
+                <h3 style="margin: 0;">${t('add_game', {}, 'Add Game')}</h3>
+              </div>
+            </div>
+          ` : ''}
         </div>
       </div>
+      <!-- Game Builder Modal Container -->
+      <div id="builder-container"></div>
     `;
 
     this.shadowRoot.querySelectorAll('.game-checkbox input').forEach(chk => {
@@ -171,16 +243,73 @@ class GameSelect extends HTMLElement {
       });
     });
 
-    this.shadowRoot.querySelectorAll('.game-card').forEach(card => {
+    this.shadowRoot.querySelectorAll('.game-delete').forEach(btn => {
+      btn.addEventListener('click', async (e) => {
+        e.stopPropagation();
+        const gameId = btn.getAttribute('data-delete');
+        const confirm = await showConfirm(t('delete_game', {}, 'Delete Game'), t('delete_game_confirm', {}, 'Are you sure you want to permanently delete this game?'));
+        if (confirm) {
+          await deleteCustomGame(gameId);
+          this.games = await loadGames();
+          this.render();
+          showToast(t('game_deleted', {}, 'Game deleted'));
+        }
+      });
+    });
+
+    this.shadowRoot.querySelectorAll('.game-edit').forEach(btn => {
+      btn.addEventListener('click', async (e) => {
+        e.stopPropagation();
+        const gameId = btn.getAttribute('data-edit');
+        const game = this.games.find(g => g.id === gameId);
+        import('../game-builder/game-builder.js').then(() => {
+          const container = this.shadowRoot.getElementById('builder-container');
+          container.innerHTML = '<game-builder></game-builder>';
+          const builder = container.querySelector('game-builder');
+          builder.loadExistingGame(game);
+          builder.addEventListener('close', () => {
+            container.innerHTML = '';
+          });
+          builder.addEventListener('game-saved', async () => {
+            container.innerHTML = '';
+            this.games = await loadGames();
+            this.render();
+            showToast(t('game_saved', {}, 'Game successfully saved!'));
+          });
+        });
+      });
+    });
+
+    this.shadowRoot.querySelectorAll('.game-card:not(.add-game-card)').forEach(card => {
       card.addEventListener('click', (e) => {
-        // Prevent selecting if we clicked the checkbox (already handled by stopPropagation above, but just in case)
-        if (e.target.tagName === 'INPUT') return;
+        // Prevent selecting if we clicked the checkbox or delete/edit button
+        if (e.target.tagName === 'INPUT' || e.target.classList.contains('game-delete') || e.target.classList.contains('game-edit')) return;
         
         const gameId = card.getAttribute('data-id');
         const game = this.games.find(g => g.id === gameId);
         this.selectGame(game);
       });
     });
+
+    const btnAddGame = this.shadowRoot.getElementById('btn-add-game');
+    if (btnAddGame) {
+      btnAddGame.addEventListener('click', () => {
+        import('../game-builder/game-builder.js').then(() => {
+          const container = this.shadowRoot.getElementById('builder-container');
+          container.innerHTML = '<game-builder></game-builder>';
+          const builder = container.querySelector('game-builder');
+          builder.addEventListener('close', () => {
+            container.innerHTML = '';
+          });
+          builder.addEventListener('game-saved', async () => {
+            container.innerHTML = '';
+            this.games = await loadGames();
+            this.render();
+            showToast(t('game_saved', {}, 'Game successfully saved!'));
+          });
+        });
+      });
+    }
   }
 }
 
