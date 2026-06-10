@@ -47,6 +47,8 @@ export async function loadGames() {
             saveValue('games_version', data.version);
         }
         
+        window.dispatchEvent(new CustomEvent('version-loaded', { detail: data.version }));
+        
         return data.games;
     } catch (err) {
         console.error("Failed to load games index", err);

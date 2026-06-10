@@ -48,6 +48,21 @@ class PlayerSetup extends HTMLElement {
         this.playerNames.pop();
       }
       this.render();
+      
+      if (delta > 0) {
+        setTimeout(() => {
+          const input = this.shadowRoot.getElementById(`player-input-${this.numPlayers - 1}`);
+          if (input) input.focus();
+        }, 0);
+      }
+    }
+  }
+
+  removePlayer(index) {
+    if (this.numPlayers > this.game.minPlayers) {
+      this.playerNames.splice(index, 1);
+      this.numPlayers--;
+      this.render();
     }
   }
 
@@ -175,6 +190,25 @@ class PlayerSetup extends HTMLElement {
             justify-content: center;
             gap: 1rem;
           }
+          
+          .remove-player-btn {
+            background: transparent;
+            border: none;
+            color: var(--text-secondary);
+            font-size: 1.2rem;
+            cursor: pointer;
+            padding: 0.5rem;
+            opacity: 0.5;
+            transition: opacity 0.2s, color 0.2s;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+          }
+          
+          .remove-player-btn:hover {
+            opacity: 1;
+            color: #ff4444;
+          }
         </style>
         <div id="content"></div>
       `;
@@ -218,6 +252,7 @@ class PlayerSetup extends HTMLElement {
                   <input type="text" id="player-input-${i}" value="${name}" placeholder="${t('name_placeholder')}" autocomplete="off" />
                   <div id="typeahead-${i}"></div>
                 </div>
+                ${this.numPlayers > this.game.minPlayers ? `<button class="remove-player-btn" id="btn-remove-${i}" title="Remove player" tabindex="-1">✕</button>` : ''}
               </div>
             `}).join('')}
           </div>
@@ -235,8 +270,13 @@ class PlayerSetup extends HTMLElement {
     this.shadowRoot.getElementById('btn-back').onclick = () => location.hash = '';
     this.shadowRoot.getElementById('btn-start').onclick = () => this.startGame();
 
-    // Attach input listeners
+    // Attach input and remove listeners
     this.playerNames.forEach((_, i) => {
+      const removeBtn = this.shadowRoot.getElementById(`btn-remove-${i}`);
+      if (removeBtn) {
+        removeBtn.onclick = () => this.removePlayer(i);
+      }
+
       const input = this.shadowRoot.getElementById(`player-input-${i}`);
       input.addEventListener('input', (e) => this.handleNameInput(i, e.target.value));
       // Close typeahead on blur with small delay

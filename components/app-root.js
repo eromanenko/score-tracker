@@ -34,6 +34,13 @@ class AppRoot extends HTMLElement {
       const page = location.hash.slice(1) || 'game-select';
       this.routeTo(page); // Re-render current page to update translations
     });
+
+    window.addEventListener('version-loaded', (e) => {
+      const versionEl = this.shadowRoot.getElementById('app-version');
+      if (versionEl) {
+        versionEl.textContent = `v${e.detail}`;
+      }
+    });
   }
 
   routeTo(page) {
@@ -209,7 +216,7 @@ class AppRoot extends HTMLElement {
 
           <div style="text-align: center; margin-top: 2rem;">
             <button class="primary" id="btn-close-settings">OK</button>
-            <div style="margin-top: 1rem; color: var(--text-secondary); font-size: 0.8rem; font-family: monospace;">v${getValue('games_version') || '1.1.1'}</div>
+            <div id="app-version" style="margin-top: 1rem; color: var(--text-secondary); font-size: 0.8rem; font-family: monospace;">v${getValue('games_version') || '1.1.1'}</div>
           </div>
         </div>
       </div>

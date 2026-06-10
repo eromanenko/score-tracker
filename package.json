@@ -1,12 +1,13 @@
 {
   "name": "score-tracker",
-  "version": "2.1.3",
-  "description": "Кожна гра у додатку використовує певний тип підрахунку балів (`scoringType`), який визначається у файлі `assets/games.json`. Детальні правила поведінки гри та відображення елементів задаються у конфігураційному файлі `config.json` всередині ZIP-архіву гри (наприклад, `assets/games/star-realms.zip`).",
+  "version": "2.1.4",
+  "description": "Each game in the app uses a specific scoring type (`scoringType`), which is defined in the `assets/games.json` file. Detailed game behavior rules and element rendering are specified in the `config.json` configuration file inside the game's ZIP archive (e.g., `assets/games/star-realms.zip`).",
   "main": "main.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
     "build": "node build_games.js --changed-only",
-    "build:games": "node build_games.js"
+    "build:games": "node build_games.js",
+    "version": "node sync-version.js && git add service-worker.js assets/games.json"
   },
   "repository": {
     "type": "git",
