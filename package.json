@@ -1,6 +1,6 @@
 {
   "name": "score-tracker",
-  "version": "2.1.4",
+  "version": "2.2.0",
   "description": "Each game in the app uses a specific scoring type (`scoringType`), which is defined in the `assets/games.json` file. Detailed game behavior rules and element rendering are specified in the `config.json` configuration file inside the game's ZIP archive (e.g., `assets/games/star-realms.zip`).",
   "main": "main.js",
   "scripts": {
