@@ -11,7 +11,7 @@ class TrackerScorer extends HTMLElement {
   connectedCallback() {
     this.game = getValue('selected_game');
     this.players = getValue('players');
-    
+
     // Initialize start scores if this is the first time loading
     const startScore = this.game.config.startScore || 0;
     let initialized = false;
@@ -29,30 +29,30 @@ class TrackerScorer extends HTMLElement {
 
   updateScore(playerIdx, change, x, y) {
     let newScore = this.players[playerIdx].score + change;
-    
+
     if (this.game.config.minScore !== undefined) {
       newScore = Math.max(this.game.config.minScore, newScore);
     }
     if (this.game.config.maxScore !== undefined) {
       newScore = Math.min(this.game.config.maxScore, newScore);
     }
-    
+
     const actualChange = newScore - this.players[playerIdx].score;
     if (actualChange === 0) return; // No change happened
 
     this.players[playerIdx].score = newScore;
     saveValue('players', this.players);
-    
+
     // Update display
     const scoreEl = this.shadowRoot.getElementById(`score-${playerIdx}`);
     if (scoreEl) {
-      scoreEl.textContent = this.players[playerIdx].score;
+      this.updateScoreDisplay(playerIdx);
       this.bounce(scoreEl);
     }
-    
+
     this.spawnFloatingNumber(playerIdx, actualChange, x, y);
     if (navigator.vibrate) navigator.vibrate(actualChange > 0 ? 10 : 30);
-    
+
     this.checkEndCondition();
   }
 
@@ -60,7 +60,7 @@ class TrackerScorer extends HTMLElement {
     if (this.game.config.winCondition === 'last_standing') {
       const minScore = this.game.config.minScore !== undefined ? this.game.config.minScore : 0;
       const alivePlayers = this.players.filter(p => p.score > minScore);
-      
+
       if (alivePlayers.length === 1) {
         setTimeout(() => showAlert(t('winner'), alivePlayers[0].name), 500);
       } else if (alivePlayers.length === 0) {
@@ -80,18 +80,18 @@ class TrackerScorer extends HTMLElement {
   spawnFloatingNumber(playerIdx, change, x, y) {
     const panel = this.shadowRoot.getElementById(`panel-${playerIdx}`);
     if (!panel) return;
-    
+
     const floater = document.createElement('div');
     floater.className = `floater ${change > 0 ? 'positive' : 'negative'}`;
     floater.textContent = change > 0 ? `+${change}` : change;
-    
+
     floater.style.left = `${x}px`;
     floater.style.top = `${y}px`;
-    
+
     panel.appendChild(floater);
-    
+
     setTimeout(() => {
-      if(panel.contains(floater)) panel.removeChild(floater);
+      if (panel.contains(floater)) panel.removeChild(floater);
     }, 800);
   }
 
@@ -102,16 +102,105 @@ class TrackerScorer extends HTMLElement {
     setTimeout(() => el.classList.remove('bump'), 100);
   }
 
+  updateScoreDisplay(playerIdx) {
+    const p = this.players[playerIdx];
+    const trackerType = this.game.config.trackerType || 'number';
+
+    const scoreEl = this.shadowRoot.getElementById(`score-${playerIdx}`);
+    const progressEl = this.shadowRoot.getElementById(`progress-${playerIdx}`);
+    if (!scoreEl) return;
+
+    if (trackerType === 'image') {
+      if (progressEl) progressEl.innerHTML = '';
+      if (p.score === 0) {
+        scoreEl.innerHTML = '';
+        return;
+      }
+      const images = this.game.config.trackerImageBlobUrls || [];
+      if (images.length === 0) {
+        scoreEl.textContent = p.score;
+        return;
+      }
+
+      let html = '<div class="tracker-images-container">';
+      for (let i = 0; i < p.score; i++) {
+        const imgSrc = images[i % images.length];
+        html += `
+           <div class="tracker-image-wrapper">
+             <img src="${imgSrc}" class="tracker-image">
+           </div>
+         `;
+      }
+      html += '</div>';
+      scoreEl.innerHTML = html;
+
+    } else if (trackerType === 'progress-bar') {
+      let percent = 0;
+      const winCondition = this.game.config.winCondition;
+      const startScore = this.game.config.startScore || 0;
+
+      if (winCondition === 'last_standing') {
+        const minScore = this.game.config.minScore || 0;
+        const range = startScore - minScore;
+        if (range > 0) {
+          percent = ((p.score - minScore) / range) * 100;
+        } else {
+          percent = 100;
+        }
+      } else { // 'first_to_max'
+        const maxScore = this.game.config.maxScore || 100;
+        const range = maxScore - startScore;
+        if (range > 0) {
+          percent = ((p.score - startScore) / range) * 100;
+        } else {
+          percent = 100;
+        }
+      }
+
+      if (percent > 100) percent = 100;
+      if (percent < 0) percent = 0;
+
+      let barColor = 'var(--accent-color)';
+      const thresholds = this.game.config.progressColorThresholds;
+      if (thresholds && Array.isArray(thresholds)) {
+        for (const th of thresholds) {
+          if (percent <= th.max) {
+            barColor = th.color;
+            break;
+          }
+        }
+      }
+
+      if (progressEl) {
+        progressEl.innerHTML = `
+          <div class="progress-bg">
+            <div class="progress-fill" style="height: ${percent}%; background-color: ${barColor};"></div>
+          </div>
+        `;
+      }
+      scoreEl.textContent = p.score;
+
+    } else {
+      if (progressEl) progressEl.innerHTML = '';
+      scoreEl.textContent = p.score;
+    }
+  }
+
   attachListeners() {
     this.shadowRoot.querySelectorAll('.tap-zone').forEach(zone => {
       zone.addEventListener('pointerdown', (e) => {
         const playerIdx = parseInt(zone.getAttribute('data-player'), 10);
         const change = parseInt(zone.getAttribute('data-val'), 10);
-        
+
         const panel = this.shadowRoot.getElementById(`panel-${playerIdx}`);
         const rect = panel.getBoundingClientRect();
-        const localX = e.clientX - rect.left;
-        const localY = e.clientY - rect.top;
+        let localX = e.clientX - rect.left;
+        let localY = e.clientY - rect.top;
+
+        if (this.players.length === 2 && playerIdx === 0) {
+          localX = rect.width - localX;
+          localY = rect.height - localY;
+        }
 
         this.updateScore(playerIdx, change, localX, localY);
       });
@@ -122,11 +211,16 @@ class TrackerScorer extends HTMLElement {
         e.stopPropagation();
         const playerIdx = parseInt(btn.getAttribute('data-player'), 10);
         const change = parseInt(btn.getAttribute('data-val'), 10);
-        
+
         const panel = this.shadowRoot.getElementById(`panel-${playerIdx}`);
         const rect = panel.getBoundingClientRect();
-        const localX = e.clientX - rect.left;
-        const localY = e.clientY - rect.top;
+        let localX = e.clientX - rect.left;
+        let localY = e.clientY - rect.top;
+
+        if (this.players.length === 2 && playerIdx === 0) {
+          localX = rect.width - localX;
+          localY = rect.height - localY;
+        }
 
         this.updateScore(playerIdx, change, localX, localY);
       });
@@ -136,7 +230,7 @@ class TrackerScorer extends HTMLElement {
       const confirm = await showConfirm(t('new_game'), t('confirm_new_game', {}, 'Are you sure you want to end this game?'));
       if (confirm) location.hash = 'game-select';
     };
-    
+
     this.shadowRoot.getElementById('btn-restart').onclick = async () => {
       const confirm = await showConfirm(t('play_again'), t('confirm_play_again', {}, 'Are you sure you want to reset the scores?'));
       if (confirm) {
@@ -149,7 +243,7 @@ class TrackerScorer extends HTMLElement {
         this.players.forEach((p, i) => {
           const scoreEl = this.shadowRoot.getElementById(`score-${i}`);
           if (scoreEl) {
-            scoreEl.textContent = p.score;
+            this.updateScoreDisplay(i);
             this.bounce(scoreEl);
           }
         });
@@ -161,12 +255,12 @@ class TrackerScorer extends HTMLElement {
     const baseStyle = document.querySelector('link[href="./style.css"]');
     const baseStyleHref = baseStyle ? baseStyle.href : '../../style.css';
     const numPlayers = this.players.length;
-    
+
     // Support either exact buttons list or quickButtons pairs
     const configBtns = this.game.config.buttons || this.game.config.quickButtons || [];
     const topButtons = configBtns.filter(b => b > 0);
     const bottomButtons = configBtns.filter(b => b < 0);
-    
+
     // Calculate grid template based on player count
     let gridCols = '1fr';
     let gridRows = '1fr';
@@ -187,7 +281,7 @@ class TrackerScorer extends HTMLElement {
       gridCols = '1fr 1fr 1fr';
       gridRows = '1fr 1fr 1fr 1fr';
     }
-    
+
     this.shadowRoot.innerHTML = `
       <style>
         @import url('${baseStyleHref}');
@@ -236,10 +330,65 @@ class TrackerScorer extends HTMLElement {
           z-index: 2;
           pointer-events: none;
           transition: transform 0.1s;
+          display: flex;
+          align-items: center;
+          justify-content: center;
+          width: 100%;
+          flex: 1;
+          min-height: 0;
         }
         
         .score-display.bump {
           transform: scale(1.15);
+        }
+
+        .tracker-images-container {
+          display: flex;
+          flex-direction: column-reverse;
+          flex-wrap: wrap;
+          justify-content: center;
+          align-content: center;
+          width: 100%;
+          height: 100%;
+          gap: 0.1rem;
+        }
+
+        .tracker-image-wrapper {
+          height: 9%;
+          aspect-ratio: 1;
+          display: flex;
+          align-items: center;
+          justify-content: center;
+        }
+
+        .tracker-image {
+          object-fit: contain;
+          transform: rotate(-90deg);
+        }
+
+        .progress-container {
+          position: absolute;
+          top: 0;
+          left: 0;
+          width: 100%;
+          height: 100%;
+          pointer-events: none;
+          z-index: 0;
+        }
+
+        .progress-bg {
+          width: 100%;
+          height: 100%;
+          background-color: rgba(0, 0, 0, 0.1);
+          position: relative;
+        }
+
+        .progress-fill {
+          position: absolute;
+          bottom: 0;
+          left: 0;
+          width: 100%;
+          transition: height 0.3s ease, background-color 0.3s ease;
         }
         
         .side-info {
@@ -464,12 +613,13 @@ class TrackerScorer extends HTMLElement {
       
       <div class="tracker-container players-${numPlayers}">
         ${this.players.map((p, i) => {
-          let panelStyle = '';
-          if (this.game.config.colors && this.game.config.colors[i]) {
-            panelStyle = `background: linear-gradient(135deg, ${this.game.config.colors[i]}, var(--panel-gradient-end));`;
-          }
-          return `
+      let panelStyle = '';
+      if (this.game.config.colors && this.game.config.colors[i]) {
+        panelStyle = `background: linear-gradient(135deg, ${this.game.config.colors[i]}, var(--panel-gradient-end));`;
+      }
+      return `
           <div class="player-panel" id="panel-${i}" style="${panelStyle}">
+            <div class="progress-container" id="progress-${i}"></div>
             <div class="tap-zone top" data-player="${i}" data-val="1"></div>
             
             <div class="side-info">
@@ -483,7 +633,7 @@ class TrackerScorer extends HTMLElement {
                 ${topButtons.map(val => `<button class="quick-btn" data-player="${i}" data-val="${val}">+${val}</button>`).join('')}
               </div>
             ` : ''}
-            <div class="score-display" id="score-${i}">${p.score}</div>
+            <div class="score-display" id="score-${i}"></div>
             ${bottomButtons.length > 0 ? `
               <div class="quick-buttons">
                 ${bottomButtons.map(val => `<button class="quick-btn" data-player="${i}" data-val="${val}">${val}</button>`).join('')}
@@ -499,6 +649,8 @@ class TrackerScorer extends HTMLElement {
         </div>
       </div>
     `;
+
+    this.players.forEach((p, i) => this.updateScoreDisplay(i));
   }
 }
 

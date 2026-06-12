@@ -137,6 +137,15 @@ export async function loadGameBundle(game) {
                 }
             }
         }
+
+        if (config.trackerImages && Array.isArray(config.trackerImages)) {
+            config.trackerImageBlobUrls = [];
+            for (let imgFile of config.trackerImages) {
+                const blobUrl = await loadBlobUrl(imgFile);
+                if (blobUrl) config.trackerImageBlobUrls.push(blobUrl);
+            }
+        }
+
         return config;
     } catch (e) {
         console.error("Failed to parse game bundle", e);

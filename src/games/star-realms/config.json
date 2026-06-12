@@ -2,6 +2,11 @@
   "startScore": 50,
   "winCondition": "last_standing",
   "minScore": 0,
+  "trackerType": "progress-bar",
+  "progressColorThresholds": [
+    { "max": 20, "color": "#ef4444" },
+    { "max": 100, "color": "#10b981" }
+  ],
   "buttons": [
     -10,
     -5,

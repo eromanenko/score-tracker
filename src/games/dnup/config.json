@@ -2,5 +2,12 @@
   "startScore": 0,
   "minScore": 0,
   "maxScore": 4,
-  "winCondition": "first_to_max"
+  "winCondition": "first_to_max",
+  "trackerType": "image",
+  "trackerImages": [
+    "d.svg",
+    "n.svg",
+    "u.svg",
+    "p.svg"
+  ]
 }
